@@ -46,10 +46,10 @@ function HomeTable() {
         <>
             <div className="mx-auto h-full w-full lg:w-11/12">
                 <h1 className="p-6 text-xl lg:text-2xl font-extrabold text-blue-800">Mes tableaux</h1>
-                <table className="w-full overflow-hidden lg:rounded-3xl bg-white text-center text-blue-800 shadow-2xl">
+                <table className="w-full overflow-hidden lg:rounded-3xl bg-white text-center text-blue-800 text-sm shadow-2xl">
                     <thead className="border-b-2 border-b-blue-800">
                     <tr>
-                        <th className="border-b-2 border-b-blue-100 bg-blue-800 py-2 text-white" scope="col"
+                        <th className="border-b-2 border-b-blue-100 bg-blue-800 py-4 text-white" scope="col"
                             role={"button"} onClick={() => sortByName()}>{isSmallScreen ? 'Thème' : 'Thématique'}</th>
                         <th scope="col" role="button"
                             onClick={() => sortByCol(17)}>{isSmallScreen ? 'Apprendre' : 'À apprendre'}</th>
@@ -63,8 +63,8 @@ function HomeTable() {
                     </thead>
                     <tbody>{numberOfTermInColumn.map((data, index) => (
                         <tr role={'button'} key={data.card_theme_id}
-                            className={`hover:bg-blue-200 border-y border-y-blue-100 ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-b-3xl" : ""}`}>
-                            <td className={`py-3 text-white bg-blue-800 ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-bl-3xl" : ""}`}>{transformText(data.name)}</td>
+                            className={`hover:bg-blue-200 border-y border-y-blue-100 semi ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-b-3xl" : ""}`}>
+                            <td className={`py-3 text-white bg-blue-800 px-2 sm:px-0 ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-bl-3xl" : ""}`}>{transformText(data.name)}</td>
                             <td>{data.cols['17']}</td>
                             <td>{data.cols['18']}</td>
                             <td>{data.cols['19']}</td>
