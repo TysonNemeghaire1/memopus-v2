@@ -31,9 +31,7 @@ export default function Login() {
             Coopernet.user[inputKey as inputsType] = inputs[inputKey as inputsType].value;
         }
         try {
-            await Coopernet.setOAuthToken();
-            await Coopernet.getUserId();
-            console.log("test")
+            await Coopernet.login();
             navigate("/");
         } catch (error) {
             if (error instanceof Error) setError(error.message);
@@ -42,7 +40,7 @@ export default function Login() {
 
     return (
         <div className="flex h-screen flex-col lg:flex-row">
-            <aside className="flex h-full items-center justify-center bg-indigo-500 py-16 lg:w-1/2 lg:p-0">
+            <aside className="flex h-full items-center justify-center bg-blue-800 py-16 lg:w-1/2 lg:p-0">
                 <div className="flex w-5/6 flex-col text-white lg:w-3/5">
                     <span className="text-4xl font-extrabold lg:text-6xl">Lorem ipsum dolor sit.</span>
                     <span className="mt-5 text-lg lg:text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, provident, totam. Accusamus alias, eius facere fugiat illum inventore, iure necessitatibus porro quam ratione tenetur ut vero voluptate? Ducimus, laborum, voluptatem.</span>
@@ -50,7 +48,7 @@ export default function Login() {
             </aside>
 
             <main
-                className="order-first flex h-full items-center justify-center bg-neutral-100 py-20 text-indigo-500 lg:order-none lg:w-1/2 lg:p-0">
+                className="order-first flex h-full items-center justify-center bg-neutral-100 py-20 text-blue-800 lg:order-none lg:w-1/2 lg:p-0">
                 <section className="mx-auto flex w-5/6 flex-col gap-8 lg:w-3/5">
                     <h1 className="text-center text-5xl">Bonjour ! Bienvenue</h1>
                     <p className="text-sm">
@@ -84,13 +82,13 @@ export default function Login() {
                             </span>}
                         </p>
                         <p className="flex gap-2 pt-4">
-                            <input className="accent-indigo-500" type="checkbox" id="stayConnected"/>
+                            <input className="accent-blue-800" type="checkbox" id="stayConnected"/>
                             <label htmlFor="stayConnected">Rester connecté ?</label>
                         </p>
                         <section> {/* Méthode pour le bouton conseiller sur la Mozilla / https://developer.mozilla.org/en-US/docs/Learn/Forms/How_to_structure_a_web_form*/}
                             <p>
                                 <button disabled={!isValidForm}
-                                        className="mt-6 w-full rounded-lg bg-indigo-500 text-white py-2.5 disabled:bg-indigo-200"
+                                        className="mt-6 w-full rounded-lg bg-blue-800 text-white py-2.5 disabled:bg-blue-200"
                                         type="submit">Se connecter
                                 </button>
                             </p>
@@ -99,7 +97,6 @@ export default function Login() {
                             <section>
                                 <p className="text-red-500 pt-2">{error}</p>
                             </section>)}
-
                     </form>
                 </section>
             </main>
