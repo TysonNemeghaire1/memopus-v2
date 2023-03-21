@@ -1,3 +1,6 @@
+import NumberOfTermInColumn from "../interfaces/NumberOfTermInColumn";
+import columnIndexType from "../interfaces/columnIndex";
+
 interface oAuth {
     access_token: string,
     refresh_token: string,
@@ -9,12 +12,11 @@ interface oAuth {
 class Coopernet {
     //region VARIABLES
     static url = 'https://coopernet.fr/';
-    static user = {
+    static user: { id: number, name: string, password: string } = {
         id: 0, name: "", password: ""
     }
     static oAuthToken: oAuth = {access_token: '', refresh_token: '', token_type: '', expires_in: 0};
     //endregion
-
     //region CONNEXION
     /**
      * @param {boolean} toRefresh
@@ -77,7 +79,7 @@ class Coopernet {
         return true; // Pas de demande
     }
 
-    static getUserId = async () => {
+    static login = async () => {
         await Coopernet.setOAuthToken();
 
         const response = await fetch(`${Coopernet.url}/memo/is_logged`, {
@@ -94,6 +96,33 @@ class Coopernet {
         }
     };
     //endregion
+
+    //#region TABLEAU ACCUEIL
+    static fetchTermsAndColumns = async (user_id?: number) => {
+        await Coopernet.setOAuthToken();
+        const response = await fetch(`${Coopernet.url}rest/cards${user_id ? '/' + user_id : ''}?_format=json`, {
+            method: "GET", headers: {
+                "Authorization": `${Coopernet.oAuthToken.token_type} ${Coopernet.oAuthToken.access_token}`,
+            }
+        })
+        if (response.ok) return response.json();
+        throw new Error(`Erreur HTTP lors de la récupération des termes et colonnes. Statut: ${response.status}`);
+    }
+    static getTermsAndColumns = async (user_id?: number): Promise<NumberOfTermInColumn[]> => {
+        const sortedTerms = [];
+        const datas = user_id ? await Coopernet.fetchTermsAndColumns(user_id) : await Coopernet.fetchTermsAndColumns();
+
+        for (let i = 0; i < datas.length - 1; i++) {
+            const {name, field_card_theme, field_card_column} = datas[i];
+            if (i === 0 || parseInt(field_card_theme) !== parseInt(datas[i - 1].field_card_theme)) {
+                sortedTerms.push({name, card_theme_id: field_card_theme, cols: {17: 0, 18: 0, 19: 0, 20: 0}}); // 17, 18, 19, 20 sont les id des colonnes
+            }
+            const index = sortedTerms.findIndex((term) => parseInt(term.card_theme_id) === parseInt(field_card_theme));
+            sortedTerms[index].cols[field_card_column as columnIndexType]++;
+        }
+        return sortedTerms.filter(term => term.cols["17"] !== 0 || term.cols["18"] !== 0 || term.cols["19"] !== 0 || term.cols["20"] !== 0) as NumberOfTermInColumn[];
+    };
+    //#endregion
 }
 
 export default Coopernet;
