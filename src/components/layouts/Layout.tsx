@@ -9,7 +9,7 @@ const Layout = () => {
                 <aside className="h-20 w-full lg:h-full lg:w-1/5">
                     <SideMenu/>
                 </aside>
-                <main className="h-full w-full bg-gray-100">
+                <main className="h-full w-full bg-gray-50">
                     <Outlet/>
                 </main>
             </div>
