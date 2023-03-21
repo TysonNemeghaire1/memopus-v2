@@ -19,7 +19,7 @@ class Coopernet {
     /**
      * @param {boolean} toRefresh
      * true si on veut rafraichir notre token /
-     * false si on veut créer un token
+     * false si on souhaite créer un token
      */
     static getOauthPayload = async (toRefresh: boolean) => {
         const payload = new FormData();
@@ -52,7 +52,6 @@ class Coopernet {
      * false : Demande la création d'un token
      */
     static fetchOauth = async (toRefresh: boolean) => {
-        console.log('fetchOauth')
         const response = await fetch(`${Coopernet.url}oauth/token`, {
             method: 'POST', body: await Coopernet.getOauthPayload(toRefresh)
         });
@@ -68,17 +67,32 @@ class Coopernet {
 
     static setOAuthToken = async () => {
         if (Coopernet.oAuthToken.access_token === "") {
-            console.log("Créer une demande de création du token")
             return Coopernet.fetchOauth(false); // Créer une demande de création du token
         }
 
         if (Coopernet.oAuthToken.expires_at && Coopernet.oAuthToken.expires_at - Date.now() < 0) {
-            console.log("Créer une demande de rafraichissement du token")
             return Coopernet.fetchOauth(true); // Créer une demande de rafraichissement du token
         }
 
-        return true;
+        return true; // Pas de demande
     }
+
+    static getUserId = async () => {
+        await Coopernet.setOAuthToken();
+
+        const response = await fetch(`${Coopernet.url}/memo/is_logged`, {
+            method: "GET", headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": `${Coopernet.oAuthToken.token_type} ${Coopernet.oAuthToken.access_token}`,
+            }
+        })
+
+        if (response.ok) {
+            const user = await response.json();
+            Coopernet.user.id = parseInt(user["user id"]);
+            return Coopernet.user.id;
+        }
+    };
     //endregion
 }
 

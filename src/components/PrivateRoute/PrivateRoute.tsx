@@ -1,18 +1,10 @@
 import {Navigate, Outlet} from 'react-router-dom'
-import Coopernet from "../../services/Coopernet";
-import {useEffect, useState} from "react";
 
-const PrivateRoutes = () => {
+interface PrivateRoutesProps {
+    isConnected: boolean
+}
 
-    const [isConnected, setIsConnected] = useState(false)
-
-    useEffect(() => {
-
-        (async () => {
-            setIsConnected(Boolean(await Coopernet.setOAuthToken()))
-        })()
-
-    }, [])
+const PrivateRoutes = ({isConnected}: PrivateRoutesProps) => {
 
     return (
         isConnected ? <Outlet/> : <Navigate to='/login'/>

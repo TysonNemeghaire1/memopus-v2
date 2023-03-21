@@ -1,12 +1,13 @@
 // @flow
-import * as React from 'react';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import Coopernet from "../../services/Coopernet";
+import {useNavigate} from "react-router-dom";
 
 type inputsType = "name" | "password";
 
-export function Login() {
+export default function Login() {
 
+    const navigate = useNavigate();
     const [inputs, setInputs] = useState({name: {value: "", isValid: true}, password: {value: "", isValid: true}});
     const [error, setError] = useState("");
     const isValidForm = inputs.name.value && inputs.password.value;
@@ -24,14 +25,16 @@ export function Login() {
         }
         setInputs({...inputs, [inputName]: {...inputs[inputName], isValid: true}});
     }
-
     const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         for (const inputKey in inputs) {
             Coopernet.user[inputKey as inputsType] = inputs[inputKey as inputsType].value;
         }
         try {
-            await Coopernet.setOAuthToken()
+            await Coopernet.setOAuthToken();
+            await Coopernet.getUserId();
+            console.log("test")
+            navigate("/");
         } catch (error) {
             if (error instanceof Error) setError(error.message);
         }
