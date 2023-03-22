@@ -1,18 +1,15 @@
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
-import Login from "../Login/Login";
-import Layout from "../layouts/Layout";
+import Layout, {thematicLoader} from "../layouts/Layout";
 import HomeTable from "../HomeTable/HomeTable";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
-import CardTable from "../CardTable/CardTable";
+import ThematicTable, {thematicTableLoader} from "../ThematicTable/ThematicTable";
+import Login from "../Login/Login";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
-            <Route element={<PrivateRoute/>}>
-                <Route path="/" element={<Layout/>}>
-                    <Route index element={<HomeTable/>}/>
-                    <Route path="cardtable" element={<CardTable/>}/>
-                </Route>
+            <Route path="/" element={<Layout/>} loader={thematicLoader}>
+                <Route index element={<HomeTable/>}/>
+                <Route path="thematicTable" element={<ThematicTable/>} loader={thematicTableLoader}/>
             </Route>
             <Route path="/login" element={<Login/>}/>
         </>
