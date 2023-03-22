@@ -95,7 +95,7 @@ export default function Login() {
                         </section>
                         {error && (
                             <section>
-                                <p className="text-red-500 pt-2">{error}</p>
+                                <p className="pt-2 text-red-500">{error}</p>
                             </section>)}
                     </form>
                 </section>
