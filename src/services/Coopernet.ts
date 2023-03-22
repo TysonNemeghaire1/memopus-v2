@@ -1,5 +1,6 @@
 import NumberOfTermInColumn from "../interfaces/NumberOfTermInColumn";
 import columnIndexType from "../interfaces/columnIndex";
+import ThematicInterface from "../interfaces/Thematic";
 
 interface oAuth {
     access_token: string,
@@ -10,14 +11,19 @@ interface oAuth {
 }
 
 class Coopernet {
+
     //region VARIABLES
+
     static url = 'https://coopernet.fr/';
     static user: { id: number, name: string, password: string } = {
         id: 0, name: "", password: ""
     }
     static oAuthToken: oAuth = {access_token: '', refresh_token: '', token_type: '', expires_in: 0};
+
     //endregion
+
     //region CONNEXION
+
     /**
      * @param {boolean} toRefresh
      * true si on veut rafraichir notre token /
@@ -81,7 +87,6 @@ class Coopernet {
 
     static login = async () => {
         await Coopernet.setOAuthToken();
-
         const response = await fetch(`${Coopernet.url}/memo/is_logged`, {
             method: "GET", headers: {
                 "Content-type": "application/json; charset=UTF-8",
@@ -95,9 +100,11 @@ class Coopernet {
             return Coopernet.user.id;
         }
     };
+
     //endregion
 
     //#region TABLEAU ACCUEIL
+
     static fetchTermsAndColumns = async (user_id?: number) => {
         await Coopernet.setOAuthToken();
         const response = await fetch(`${Coopernet.url}rest/cards${user_id ? '/' + user_id : ''}?_format=json`, {
@@ -122,6 +129,24 @@ class Coopernet {
         }
         return sortedTerms.filter(term => term.cols["17"] !== 0 || term.cols["18"] !== 0 || term.cols["19"] !== 0 || term.cols["20"] !== 0) as NumberOfTermInColumn[];
     };
+
+    //#endregion
+
+    //#region TERMS ALIAS thematics
+
+    static getThematics = async (userId: number = Coopernet.user.id): Promise<ThematicInterface[]> => {
+        console.log("test")
+        await Coopernet.setOAuthToken();
+        const response = await fetch(`${Coopernet.url}memo/themes/${userId}`, {
+            method: "GET", headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+                "Authorization": `${Coopernet.oAuthToken.token_type} ${Coopernet.oAuthToken.access_token}`,
+            }
+        })
+        if (response.ok) return response.json();
+        throw new Error("Problème dans la récupération des thèmes");
+    }
+
     //#endregion
 }
 
