@@ -3,14 +3,17 @@ import {IoPeople,} from "react-icons/io5";
 import {RiLogoutBoxFill} from "react-icons/ri";
 import {IoMdPerson} from "react-icons/io";
 import {FaHome} from "react-icons/fa";
-import ThematicInterface from "../../interfaces/Thematic";
+import Thematic from "../../interfaces/Thematic";
 import {Link} from "react-router-dom";
+import NavList from "./NavList/NavList";
+import User from "../../interfaces/User";
 
 interface PropsInterface {
-    thematics: ThematicInterface[]
+    thematics: Thematic[]
+    users: User[]
 }
 
-function SideMenu({thematics}: PropsInterface) {
+function SideMenu({thematics, users}: PropsInterface) {
     return (
         <div className="overflow-y-auto">
             <div className="flex items-center justify-between p-6">
@@ -18,20 +21,26 @@ function SideMenu({thematics}: PropsInterface) {
                 <button className="lg:hidden">X</button>
             </div>
             <nav className="mx-6 flex flex-col border-b border-b-blue-500 py-4 text-blue-800">
-                <Link to="/"><p className="flex items-center gap-2 p-2.5 hover:bg-blue-100"><FaHome/>Accueil</p></Link>
-                <Link to="/thematicTable"><p className="flex items-center gap-2 p-2.5 hover:bg-blue-100"><IoMdPerson/>Mes
-                    thématiques </p>
-                </Link>
-                <p className="flex items-center gap-2 p-2.5 hover:bg-blue-100"><IoPeople/>thématiques des autres</p>
-                <p className="flex items-center gap-2 text-red-400 p-2.5 hover:bg-red-100"><RiLogoutBoxFill/>Déconnexion
-                </p>
+                <ul>
+                    <li>
+                        <Link className="flex items-center gap-2 p-2.5 hover:bg-blue-100" to="/"><FaHome/>Accueil</Link>
+                    </li>
+                    <li>
+                        <Link className="flex items-center gap-2 p-2.5 hover:bg-blue-100"
+                              to="/thematicTable"><IoMdPerson/>Mes
+                            thématiques </Link>
+                    </li>
+                    <li className="flex items-center gap-2 p-2.5 hover:bg-blue-100"><IoPeople/>Autres utilisateurs</li>
+                    <li className="flex items-center gap-2 text-red-400 p-2.5 hover:bg-red-100"><RiLogoutBoxFill/>Déconnexion
+                    </li>
+                </ul>
             </nav>
 
             <nav className="mx-6 mt-8">
-                <span className="text-lg font-bold text-blue-800">Mes thématiques</span>
-                <ul className="flex flex-col py-2 text-blue-800">
-                    {thematics.map((theme) => (<li className="p-2.5 hover:bg-blue-100">{theme.name}</li>))}
-                </ul>
+                <NavList info={{title: "Mes thématiques", baseUrl: "/thematic/"}} dataArray={thematics}/>
+            </nav>
+            <nav className="mx-6 mt-4">
+                <NavList info={{title: "Autres utilisateurs", baseUrl: "/user/"}} dataArray={users}/>
             </nav>
         </div>
     );
