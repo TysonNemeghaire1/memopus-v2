@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import Coopernet from "../../services/Coopernet";
-import NumberOfTermInColumnInterface from "../../interfaces/NumberOfTermInColumn";
-import columnIndexType from "../../interfaces/columnIndex";
+import NumberOfTermInColumn from "../../interfaces/NumberOfTermInColumn";
+import ColumnIndex from "../../interfaces/ColumnIndex";
 import {AiOutlineArrowDown} from "react-icons/ai";
 
 function HomeTable() {
 
-    const [numberOfTermInColumn, setNumberOfTermInColumn] = useState<NumberOfTermInColumnInterface[]>([]);
+    const [numberOfTermInColumn, setNumberOfTermInColumn] = useState<NumberOfTermInColumn[]>([]);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ function HomeTable() {
             setNumberOfTermInColumn(await Coopernet.getTermsAndColumns());
         })()
 
-        if (window.screen.width < 762) {
+        if (window.innerWidth < 762) {
             setIsSmallScreen(true);
         }
     }, [])
@@ -36,7 +36,7 @@ function HomeTable() {
     };
     const sortByCol = (col_id: number) => {
         const numberOfTermInColumnCopy = [...numberOfTermInColumn];
-        numberOfTermInColumnCopy.sort((firstItem, secondItem) => secondItem.cols[col_id as columnIndexType] - firstItem.cols[col_id as columnIndexType]);
+        numberOfTermInColumnCopy.sort((firstItem, secondItem) => secondItem.cols[col_id as ColumnIndex] - firstItem.cols[col_id as ColumnIndex]);
         setNumberOfTermInColumn(numberOfTermInColumnCopy);
     }
     const transformText = (string: string) => {
@@ -48,7 +48,7 @@ function HomeTable() {
             <div className="mx-auto h-full w-full lg:w-11/12">
                 <h1 className="py-6 text-xl font-extrabold text-blue-800 lg:text-2xl">Accueil</h1>
                 <table
-                    className="w-full overflow-hidden bg-white text-center text-sm text-blue-800 shadow-2xl lg:rounded-3xl">
+                    className="w-full overflow-hidden bg-white text-center text-sm text-blue-800 shadow-xl lg:rounded-xl">
                     <thead className="border-b-2 border-b-blue-800">
                     <tr>
                         <th className="flex items-center justify-center border-b-blue-100 bg-blue-800 py-5 text-white border-b-3 gap-1.5"
@@ -80,8 +80,8 @@ function HomeTable() {
                     </thead>
                     <tbody>{numberOfTermInColumn.map((data, index) => (
                         <tr role={'button'} key={data.card_theme_id}
-                            className={`hover:bg-blue-200 border-b border-b-blue-100 ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-b-3xl" : ""}`}>
-                            <td className={`font-bold py-3 text-blue-800 bg-blue-50 px-2 sm:px-0 ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-bl-3xl" : ""}`}>{transformText(data.name)}</td>
+                            className={`hover:bg-blue-200 border-b border-b-blue-100 ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-b-xl" : ""}`}>
+                            <td className={`font-bold py-3 text-blue-800 bg-blue-50 px-2 sm:px-0 ${index === numberOfTermInColumn.length - 1 ? "lg:rounded-bl-xl" : ""}`}>{transformText(data.name)}</td>
                             <td>{data.cols['17']}</td>
                             <td>{data.cols['18']}</td>
                             <td>{data.cols['19']}</td>
