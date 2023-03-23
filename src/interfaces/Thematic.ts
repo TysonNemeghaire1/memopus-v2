@@ -1,6 +1,6 @@
-export default interface ThematicInterface {
+export default interface Thematic {
     id: string,
     pid: number,
     name: string,
-    children?: ThematicInterface[]
+    children?: Thematic[]
 }
