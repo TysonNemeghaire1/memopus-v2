@@ -1,6 +1,7 @@
 import NumberOfTermInColumn from "../interfaces/NumberOfTermInColumn";
-import columnIndexType from "../interfaces/columnIndex";
-import ThematicInterface from "../interfaces/Thematic";
+import columnIndexType from "../interfaces/ColumnIndex";
+import Thematic from "../interfaces/Thematic";
+import User from "../interfaces/User";
 
 interface oAuth {
     access_token: string,
@@ -15,8 +16,8 @@ class Coopernet {
     //region VARIABLES
 
     static url = 'https://coopernet.fr/';
-    static user: { id: number, name: string, password: string } = {
-        id: 0, name: "", password: ""
+    static user: { id: string, name: string, password: string } = {
+        id: "", name: "", password: ""
     }
     static oAuthToken: oAuth = {access_token: '', refresh_token: '', token_type: '', expires_in: 0};
 
@@ -96,7 +97,7 @@ class Coopernet {
 
         if (response.ok) {
             const user = await response.json();
-            Coopernet.user.id = parseInt(user["user id"]);
+            Coopernet.user.id = user["user id"];
             return Coopernet.user.id;
         }
     };
@@ -134,7 +135,7 @@ class Coopernet {
 
     //#region TERMS ALIAS thematics
 
-    static getThematics = async (userId: number = Coopernet.user.id): Promise<ThematicInterface[]> => {
+    static getThematics = async (userId: string = Coopernet.user.id): Promise<Thematic[]> => {
         console.log("test")
         await Coopernet.setOAuthToken();
         const response = await fetch(`${Coopernet.url}memo/themes/${userId}`, {
@@ -148,6 +149,23 @@ class Coopernet {
     }
 
     //#endregion
+
+    static getUsers = async (): Promise<User[]> => {
+        await Coopernet.setOAuthToken();
+        const response = await fetch(Coopernet.url + "memo/users/", {
+            method: "GET", headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": `${Coopernet.oAuthToken.token_type} ${Coopernet.oAuthToken.access_token}`,
+            }
+        })
+        if (response.ok) {
+            const dataArray: { uid: string, uname: string }[] = await response.json();
+            return dataArray.map(dataItem => {
+                return {name: dataItem.uname, id: dataItem.uid}
+            });
+        }
+        throw new Error("Erreur lors de la récupération Users");
+    }
 }
 
 export default Coopernet;
