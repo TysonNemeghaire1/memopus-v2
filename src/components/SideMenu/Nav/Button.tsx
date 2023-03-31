@@ -8,9 +8,10 @@ interface Props {
   name: string;
   id: string;
   thematicChildren?: Thematic[];
+  pid?: number
 }
 
-export default function Button({ name, thematicChildren, id }: Props) {
+export default function Button({ name, thematicChildren, id, pid }: Props) {
   const [show, setShow] = useState(false);
   return (
     <li
@@ -23,7 +24,7 @@ export default function Button({ name, thematicChildren, id }: Props) {
       <span className="flex justify-between">
         {name}
         <div className="flex items-center gap-0.5">
-          <ActionButtonGroup id={id} />
+          <ActionButtonGroup id={id} hasChildren={!!thematicChildren} pid={pid} />
           {thematicChildren && (
             <button
               className={`text-blue-800 h-fit transition duration-500 p-1 hover:bg-blue-800 hover:text-white rounded-full ${

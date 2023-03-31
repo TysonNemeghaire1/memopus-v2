@@ -63,6 +63,7 @@ function List({ dataArray, show }: Props) {
                     name={data.name}
                     id={data.id}
                     thematicChildren={data.children}
+                    pid={data.pid}
                   />
                 );
               }

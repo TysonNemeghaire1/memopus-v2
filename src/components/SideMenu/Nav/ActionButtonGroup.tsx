@@ -5,7 +5,13 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useFetcher } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
-function ActionButtonGroup(props: { id: string }) {
+interface Props {
+  id: string;
+  hasChildren: boolean;
+  pid?: number;
+}
+
+function ActionButtonGroup({ hasChildren, id, pid }: Props) {
   const fetcher = useFetcher();
   const [show, setShow] = useState(false);
   return (
@@ -38,16 +44,18 @@ function ActionButtonGroup(props: { id: string }) {
           <AiFillEdit />
         </button>
 
-        <fetcher.Form action={`/thematics/${props.id}`} method="delete">
-          <button
-            title="Supprimer la thématique"
-            name="action"
-            value="delete"
-            className="rounded p-1 text-red-600 hover:bg-red-200"
-          >
-            <FaTrashAlt />
-          </button>
-        </fetcher.Form>
+        {!hasChildren && (
+          <fetcher.Form action={`/thematics/${id}`} method="delete">
+            <button
+              title="Supprimer la thématique"
+              name="action"
+              value="delete"
+              className="rounded p-1 text-red-600 hover:bg-red-200"
+            >
+              <FaTrashAlt />
+            </button>
+          </fetcher.Form>
+        )}
       </div>
     </>
   );
