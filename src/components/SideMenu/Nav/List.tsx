@@ -5,24 +5,24 @@ import Button from "./Button";
 
 interface Props {
   dataArray: Thematic[] | User[];
-  show: boolean;
+  display: { showList: boolean; hideFilter?: boolean };
 }
 
-function List({ dataArray, show }: Props) {
+function List({ dataArray, display }: Props) {
   const [filter, setFilter] = useState("");
 
   return (
     <div
       className={`overflow-y-scroll transition-all ease-in-out duration-500 ease-in-out ${
-        show ? "max-h-80" : "max-h-0"
+        display.showList ? "max-h-80" : "max-h-0"
       }`}
     >
       <div
         className={`transition duration-700 text-blue-800 ${
-          !show && "-translate-y-full"
+          !display.showList && "-translate-y-full"
         }`}
       >
-        {dataArray.length > 6 && (
+        {(!display.hideFilter && dataArray.length > 6) && (
           <section
             onClick={(e) => e.stopPropagation()}
             className="mt-2 flex items-center gap-2 px-2.5"
@@ -30,7 +30,9 @@ function List({ dataArray, show }: Props) {
             <label
               className="font-semibold"
               htmlFor={`thematicFilter-${
-                isThematic(dataArray[0]) ? dataArray[0].id : dataArray[0].uid
+                isThematic(dataArray[0])
+                  ? dataArray[0].id
+                  : `u-${dataArray[0].uid}`
               }`}
             >
               Filtre
@@ -60,10 +62,7 @@ function List({ dataArray, show }: Props) {
                 return (
                   <Button
                     key={data.id}
-                    name={data.name}
-                    id={data.id}
-                    thematicChildren={data.children}
-                    pid={data.pid}
+                    data={data}
                   />
                 );
               }
@@ -73,7 +72,10 @@ function List({ dataArray, show }: Props) {
                 data.uname.toUpperCase().includes(filter.toUpperCase())
               ) {
                 return (
-                  <Button key={data.uid} name={data.uname} id={data.uid} />
+                  <Button
+                    key={data.uid}
+                    data={data}
+                  />
                 );
               }
             }
