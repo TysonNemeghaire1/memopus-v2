@@ -123,7 +123,6 @@ class Coopernet {
   //#region TABLEAU ACCUEIL
 
   static fetchTermsAndColumns = async (user_id?: number) => {
-    console.time("fetchTermsAndColumns");
     await Coopernet.setOAuthToken();
     const response = await fetch(
       `${Coopernet.url}rest/cards${user_id ? "/" + user_id : ""}?_format=json`,
@@ -134,7 +133,6 @@ class Coopernet {
         },
       }
     );
-    console.timeEnd("fetchTermsAndColumns");
     if (response.ok) return response.json();
     throw new Error(
       `Erreur HTTP lors de la récupération des termes et colonnes. Statut: ${response.status}`
@@ -181,7 +179,6 @@ class Coopernet {
   static getThematics = async (
     userId: string = Coopernet.user.id
   ): Promise<Thematic[]> => {
-    console.time("getThematics");
     await Coopernet.setOAuthToken();
 
     const response = await fetch(`${Coopernet.url}memo/themes/${userId}`, {
@@ -191,7 +188,6 @@ class Coopernet {
         Authorization: `${Coopernet.oAuthToken.token_type} ${Coopernet.oAuthToken.access_token}`,
       },
     });
-    console.timeEnd("getThematics");
 
     if (response.ok) return response.json();
     throw new Error("Problème dans la récupération des thèmes");
@@ -244,8 +240,12 @@ class Coopernet {
       }),
     });
     if (response.ok) {
-      return response.json();
+      const data = await response.json();
+      console.log(data)
+      return data
     }
+    console.log("test")
+
     throw new Error(
       "Erreur lors de l'update ou de la création d'une thématique"
     );
@@ -254,7 +254,6 @@ class Coopernet {
   //#endregion
 
   static getUsers = async (): Promise<User[]> => {
-    console.time("getUsers");
     await Coopernet.setOAuthToken();
     const response = await fetch(Coopernet.url + "memo/users/", {
       method: "GET",
@@ -264,8 +263,6 @@ class Coopernet {
       },
     });
     if (response.ok) {
-      console.timeEnd("getUsers");
-      console.log("test");
       const dataArray: { uid: string; uname: string }[] = await response.json();
       return dataArray.map((dataItem) => {
         return { uname: dataItem.uname, uid: dataItem.uid };
