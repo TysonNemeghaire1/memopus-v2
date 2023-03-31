@@ -19,18 +19,20 @@ export async function action({ request, params }: ActionFunctionArgs) {
     await Coopernet.deleteThematic(params.thematicId as string);
     return null;
   } else {
-    const label = formData.get("label");
-    const ptid = formData.get("ptid");
+    const label = formData.get("name");
+    const pid = formData.get("pid");
+
     if (action === "add") {
+      // TODO Changer l'endpoint pour mettre en enfant d'un thème directement
       return await Coopernet.addOrEditThematic(
         label as string,
-        ptid ? parseInt(ptid as string) : undefined
+        pid ? pid as string : undefined
       );
     }
     if (action === "edit") {
       return await Coopernet.addOrEditThematic(
         label as string,
-        ptid ? parseInt(ptid as string) : undefined,
+        pid ? parseInt(pid as string) : undefined,
         params.thematicId ? parseInt(params.thematicId as string) : undefined
       );
     }

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { IoAddCircle } from "react-icons/io5";
+import { IoAddCircle, IoRemoveCircle } from "react-icons/io5";
 import { AiFillEdit } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import { useFetcher } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
 interface Props {
-  id: string;
+  ids: { id: string; pid?: number };
+  showForm: { value: boolean; toggle: () => void };
   hasChildren: boolean;
-  pid?: number;
 }
 
-function ActionButtonGroup({ hasChildren, id, pid }: Props) {
+function ActionButtonGroup({ hasChildren, ids, showForm }: Props) {
   const fetcher = useFetcher();
   const [show, setShow] = useState(false);
   return (
@@ -33,8 +33,9 @@ function ActionButtonGroup({ hasChildren, id, pid }: Props) {
         <button
           title="Ajouter une thématique"
           className="rounded text-blue-600 p-0.5 hover:bg-blue-600 hover:text-white"
+          onClick={showForm.toggle}
         >
-          <IoAddCircle className="text-xl" />
+            {showForm.value ? <IoRemoveCircle className="text-xl"/> : <IoAddCircle className="text-xl"/>}
         </button>
 
         <button
@@ -45,7 +46,7 @@ function ActionButtonGroup({ hasChildren, id, pid }: Props) {
         </button>
 
         {!hasChildren && (
-          <fetcher.Form action={`/thematics/${id}`} method="delete">
+          <fetcher.Form action={`/thematics/${ids.id}`} method="delete">
             <button
               title="Supprimer la thématique"
               name="action"
