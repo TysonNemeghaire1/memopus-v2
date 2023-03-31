@@ -13,7 +13,6 @@ interface PropsInterface {
 
 function SideMenu({ thematics }: PropsInterface) {
   const fetcher = useFetcher();
-  console.log(fetcher);
   return (
     <div className="overflow-y-auto">
       <div className="flex items-center justify-between p-6">
@@ -37,7 +36,7 @@ function SideMenu({ thematics }: PropsInterface) {
               to="/my-themes"
             >
               <IoMdPerson />
-              Mes thématiques{" "}
+              Mes thématiques
             </Link>
           </li>
           <li className="flex items-center gap-2 p-2.5 hover:bg-blue-100">
