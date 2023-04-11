@@ -1,5 +1,10 @@
 import Coopernet from "../services/Coopernet";
-import { ActionFunctionArgs, redirect } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  redirect,
+} from "react-router-dom";
+import Thematic from "../interfaces/Thematic";
 
 export async function loader() {
   try {
@@ -8,6 +13,18 @@ export async function loader() {
     return { thematics };
   } catch (e) {
     return redirect("/login");
+  }
+}
+
+export async function flatArrayLoader({ params }: LoaderFunctionArgs) {
+  try {
+    const thematics = await Coopernet.getThematics(
+      params?.userId ? params.userId : undefined
+    );
+    console.log(thematics, params);
+    return mergeArrayRecursively(thematics);
+  } catch (e) {
+    return { error: "Pas de données" };
   }
 }
 
@@ -23,10 +40,9 @@ export async function action({ request, params }: ActionFunctionArgs) {
     const pid = formData.get("pid");
 
     if (action === "add") {
-      // TODO Changer l'endpoint pour mettre en enfant d'un thème directement
       return await Coopernet.addOrEditThematic(
         label as string,
-        pid ? pid as string : undefined
+        pid ? (pid as string) : undefined
       );
     }
     if (action === "edit") {
@@ -38,3 +54,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
     }
   }
 }
+
+const mergeArrayRecursively = (
+  thematics: Thematic[],
+  mergedArray?: Thematic[]
+) => {
+  const new_array = mergedArray ?? [];
+  for (let thematic of thematics) {
+    new_array.push(thematic);
+    if (thematic.children) mergeArrayRecursively(thematic.children, new_array);
+  }
+  return new_array;
+};
