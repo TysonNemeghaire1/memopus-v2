@@ -51,7 +51,7 @@ function HomeTable() {
 
   return (
     <>
-      <div className="mx-auto h-full w-11/12 w-full">
+      <div className="mx-auto h-full w-11/12">
         <h1 className="py-6 text-xl font-extrabold text-blue-800 2xl:text-2xl">
           Accueil
         </h1>

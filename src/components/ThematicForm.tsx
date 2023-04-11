@@ -11,7 +11,7 @@ function ThematicForm() {
   const currentThematic: Thematic = location.state?.data;
 
   return (
-    <div className="mx-auto h-full w-11/12 w-full sm:mt-8">
+    <div className="mx-auto h-full w-11/12 sm:mt-8">
       <fetcher.Form
         key={currentThematic.id}
         className={"bg-white flex flex-col shadow-lg py-5 px-5"}

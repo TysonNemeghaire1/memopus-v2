@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { Link, useFetcher } from "react-router-dom";
+import Container from "./Nav/Container";
+import { useSmallScreen } from "../../hooks/useSmallScreen";
+import Thematic from "../../interfaces/Thematic";
+import Coopernet from "../../services/Coopernet";
 import { IoPeople } from "react-icons/io5";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
-import Thematic from "../../interfaces/Thematic";
-import { Link, useFetcher } from "react-router-dom";
-import Container from "./Nav/Container";
 import { HiMenu } from "react-icons/hi";
-import { useSmallScreen } from "../../hooks/useSmallScreen";
 
 interface PropsInterface {
   thematics: Thematic[];
@@ -63,7 +64,7 @@ function SideMenu({ thematics }: PropsInterface) {
             <li>
               <Link
                 className="flex items-center gap-2 p-2.5 hover:bg-blue-100"
-                to="/thematics"
+                to={`/${Coopernet.user.id}/thematics`}
               >
                 <IoMdPerson />
                 Mes thématiques
