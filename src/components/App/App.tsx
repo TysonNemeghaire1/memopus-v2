@@ -6,13 +6,16 @@ import {
 } from "react-router-dom";
 import Layout from "../layouts/Layout";
 import HomeTable from "../HomeTable/HomeTable";
-import DataTable, { thematicTableLoader } from "../DataTable/DataTable";
+import DataTable from "../DataTable/DataTable";
 import Login from "../Login/Login";
 import { loader as userLoader } from "../../routes/users";
 import {
-  loader as thematicLoader,
   action as thematicAction,
+  flatArrayLoader,
+  loader as thematicLoader,
 } from "../../routes/thematics";
+import ThematicForm from "../ThematicForm";
+import Coopernet from "../../services/Coopernet";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,16 +23,26 @@ const router = createBrowserRouter(
       <Route path="/" element={<Layout />} loader={thematicLoader}>
         <Route index element={<HomeTable />} />
         <Route
-          path="my-thematics"
+          path={`${Coopernet.user.id}/thematics`}
           element={<DataTable />}
-          loader={thematicTableLoader}
+          loader={flatArrayLoader}
         />
+        <Route
+          path="/thematics"
+          action={thematicAction}
+          loader={thematicLoader}
+        >
+          <Route path=":thematicId" action={thematicAction}>
+            <Route
+              path="edit"
+              element={<ThematicForm />}
+              loader={flatArrayLoader}
+            />
+          </Route>
+        </Route>
+        <Route path="/users" element={<DataTable />} loader={userLoader} />
       </Route>
       <Route path="/login" element={<Login />} />
-      <Route path="/users" loader={userLoader} />
-      <Route path="/thematics" action={thematicAction} loader={thematicLoader}>
-        <Route path=":thematicId" action={thematicAction} />
-      </Route>
     </>
   )
 );
