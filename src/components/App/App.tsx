@@ -41,6 +41,11 @@ const router = createBrowserRouter(
           </Route>
         </Route>
         <Route path="/users" element={<DataTable />} loader={userLoader} />
+        <Route
+            path={`/users/:userId/thematics`}
+            element={<DataTable />}
+            loader={flatArrayLoader}
+        />
       </Route>
       <Route path="/login" element={<Login />} />
     </>

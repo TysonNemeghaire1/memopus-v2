@@ -53,7 +53,7 @@ function DataTable() {
                     key={data.uid}
                     className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 px-8 py-2 text-center"
                   >
-                    <Link to={`/users/${data.uid}/thematics`}>
+                    <Link to={`${data.uid}/thematics`}>
                       {data.uname}
                     </Link>
                   </li>
