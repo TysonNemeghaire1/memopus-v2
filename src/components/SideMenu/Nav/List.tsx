@@ -22,11 +22,8 @@ function List({ dataArray, display }: Props) {
           !display.showList && "-translate-y-full"
         }`}
       >
-        {(!display.hideFilter && dataArray.length > 6) && (
-          <section
-            onClick={(e) => e.stopPropagation()}
-            className="mt-2 flex items-center gap-2 px-2.5"
-          >
+        {!display.hideFilter && dataArray.length > 6 && (
+          <section className="mt-2 flex items-center gap-2 px-2.5">
             <label
               className="font-semibold"
               htmlFor={`thematicFilter-${
@@ -59,24 +56,14 @@ function List({ dataArray, display }: Props) {
                 filter.length < 2 ||
                 data.name.toUpperCase().includes(filter.toUpperCase())
               ) {
-                return (
-                  <Button
-                    key={data.id}
-                    data={data}
-                  />
-                );
+                return <Button key={data.id} data={data} />;
               }
             } else {
               if (
                 filter.length < 2 ||
                 data.uname.toUpperCase().includes(filter.toUpperCase())
               ) {
-                return (
-                  <Button
-                    key={data.uid}
-                    data={data}
-                  />
-                );
+                return <Button key={data.uid} data={data} />;
               }
             }
             return [];

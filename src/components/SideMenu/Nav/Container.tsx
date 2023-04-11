@@ -20,10 +20,7 @@ export default function Container({ dataArray, info }: Props) {
 
   return (
     <>
-      <div
-        onClick={() => setShowList(!showList)}
-        className="mb-2 flex cursor-pointer items-center justify-between group"
-      >
+      <div className="mb-2 flex items-center justify-between">
         <p className="text-lg font-bold text-blue-900">{info.title}</p>
         <div className="flex items-center gap-2">
           {isThematic(dataArray[0]) && (
@@ -34,10 +31,7 @@ export default function Container({ dataArray, info }: Props) {
                   : "Ajouter une thématique"
               }
               className="rounded-full text-blue-600 p-0.5 hover:bg-blue-600 hover:text-white"
-              onClick={(event) => {
-                event.stopPropagation();
-                setShowForm(!showForm);
-              }}
+              onClick={() => setShowForm(!showForm)}
             >
               {showForm ? (
                 <IoRemoveCircle className="text-2xl" />
@@ -47,7 +41,8 @@ export default function Container({ dataArray, info }: Props) {
             </button>
           )}
           <button
-            className={`text-blue-800 h-fit transition duration-500 group-hover:bg-blue-800 group-hover:text-white p-1 rounded-full ${
+            onClick={() => setShowList(!showList)}
+            className={`text-blue-800 h-fit transition duration-500 hover:bg-blue-800 hover:text-white p-1 rounded-full ${
               showList ? "rotate-180 " : ""
             }`}
           >
@@ -56,7 +51,12 @@ export default function Container({ dataArray, info }: Props) {
         </div>
       </div>
       {isThematic(dataArray[0]) && showForm && <InlineAddThematic key={"0"} />}
-      <List dataArray={dataArray} display={{showList, hideFilter: showForm}}/>
+      {
+        <List
+          dataArray={dataArray}
+          display={{ showList, hideFilter: showForm }}
+        />
+      }
     </>
   );
 }

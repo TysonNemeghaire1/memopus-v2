@@ -2,7 +2,7 @@ import User from "./User";
 
 export default interface Thematic {
   id: string;
-  pid: number;
+  pid: string;
   name: string;
   children?: Thematic[];
 }

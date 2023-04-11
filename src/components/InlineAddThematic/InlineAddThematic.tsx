@@ -2,31 +2,29 @@ import React from "react";
 import { useFetcher } from "react-router-dom";
 
 interface Props {
-  pid?: string
+  pid?: string;
 }
 
-function InlineAddThematic({pid}: Props) {
+function InlineAddThematic({ pid }: Props) {
   const fetcher = useFetcher();
   return (
     <fetcher.Form
       action="/thematics"
       method="post"
-      className="flex gap-1 pb-1.5"
+      className="flex gap-1 py-1.5"
     >
-      {pid && (
-          <input type="hidden" value={pid} name="pid"/>
-      )}
+      {pid && <input type="hidden" value={pid} name="pid" />}
       <input
         name="name"
         placeholder="Nom du terme"
-        className="w-full outline-1 outline outline-blue-800 rounded pl-1.5"
+        className="w-full rounded outline outline-1 outline-blue-800 pl-1.5"
         type="text"
       />
       <button
         name="action"
         type="submit"
         value="add"
-        className="py-1 px-2 text-blue-800 border border-blue-800 rounded"
+        className="rounded border border-blue-800 px-2 py-1 text-blue-800"
       >
         Ajouter
       </button>

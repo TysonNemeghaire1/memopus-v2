@@ -3,6 +3,7 @@ import Coopernet from "../../services/Coopernet";
 import NumberOfTermInColumn from "../../interfaces/NumberOfTermInColumn";
 import ColumnIndex from "../../interfaces/ColumnIndex";
 import { AiOutlineArrowDown } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 function HomeTable() {
   const [numberOfTermInColumn, setNumberOfTermInColumn] = useState<
@@ -50,11 +51,11 @@ function HomeTable() {
 
   return (
     <>
-      <div className="mx-auto h-full w-full lg:w-11/12">
-        <h1 className="py-6 text-xl font-extrabold text-blue-800 lg:text-2xl">
+      <div className="mx-auto h-full w-11/12 w-full">
+        <h1 className="py-6 text-xl font-extrabold text-blue-800 2xl:text-2xl">
           Accueil
         </h1>
-        <table className="w-full overflow-hidden bg-white text-center text-sm text-blue-800 shadow-xl lg:rounded-xl">
+        <table className="w-full overflow-hidden rounded-xl bg-white text-center text-sm text-blue-800 shadow-xl">
           <thead className="border-b-2 border-b-blue-800">
             <tr>
               <th
@@ -101,23 +102,56 @@ function HomeTable() {
                 key={data.card_theme_id}
                 className={`hover:bg-blue-200 border-b border-b-blue-100 ${
                   index === numberOfTermInColumn.length - 1
-                    ? "lg:rounded-b-xl"
+                    ? "md:rounded-b-xl"
                     : ""
                 }`}
               >
                 <td
                   className={`font-bold py-3 text-blue-800 bg-blue-50 px-2 sm:px-0 ${
                     index === numberOfTermInColumn.length - 1
-                      ? "lg:rounded-bl-xl"
+                      ? "md:rounded-bl-xl"
                       : ""
                   }`}
                 >
-                  {transformText(data.name)}
+                  <Link
+                    to={`/thematic/${data.card_theme_id}`}
+                    className="block h-full w-full"
+                  >
+                    {transformText(data.name)}{" "}
+                  </Link>
                 </td>
-                <td>{data.cols["17"]}</td>
-                <td>{data.cols["18"]}</td>
-                <td>{data.cols["19"]}</td>
-                <td>{data.cols["20"]}</td>
+                <td>
+                  <Link
+                    to={`/thematic/${data.card_theme_id}`}
+                    className="block h-full w-full"
+                  >
+                    {data.cols["17"]}
+                  </Link>
+                </td>
+                <td>
+                  <Link
+                    to={`/thematic/${data.card_theme_id}`}
+                    className="block h-full w-full"
+                  >
+                    {data.cols["18"]}
+                  </Link>
+                </td>
+                <td>
+                  <Link
+                    to={`/thematic/${data.card_theme_id}`}
+                    className="block h-full w-full"
+                  >
+                    {data.cols["19"]}
+                  </Link>
+                </td>
+                <td>
+                  <Link
+                    to={`/thematic/${data.card_theme_id}`}
+                    className="block h-full w-full"
+                  >
+                    {data.cols["20"]}
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>

@@ -14,7 +14,7 @@ interface oAuth {
 class Coopernet {
   //region VARIABLES
 
-  static url = "https://coopernet.fr/";
+  static url = "http://local.coopernet.my/";
   static user: { id: string; name: string; password: string } = {
     id: "",
     name: "",
@@ -199,10 +199,7 @@ class Coopernet {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          Coopernet.oAuthToken.token_type +
-          " " +
-          Coopernet.oAuthToken.access_token,
+        Authorization: `${Coopernet.oAuthToken.token_type} ${Coopernet.oAuthToken.access_token}`,
       },
     });
     if (!response.ok)
@@ -240,11 +237,8 @@ class Coopernet {
       }),
     });
     if (response.ok) {
-      const data = await response.json();
-      console.log(data)
-      return data
+      return await response.json();
     }
-    console.log("test")
 
     throw new Error(
       "Erreur lors de l'update ou de la création d'une thématique"
