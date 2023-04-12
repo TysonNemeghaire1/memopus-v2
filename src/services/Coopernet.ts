@@ -102,7 +102,7 @@ class Coopernet {
   };
 
   static login = async () => {
-    await Coopernet.setOAuthToken();
+    Coopernet.oAuthToken.refresh_token ? await Coopernet.fetchOauth(true) : await Coopernet.setOAuthToken();
     const response = await fetch(`${Coopernet.url}/memo/is_logged`, {
       method: "GET",
       headers: {
