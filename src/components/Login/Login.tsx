@@ -46,6 +46,17 @@ export default function Login() {
     try {
       setIsPending(true);
       await Coopernet.login();
+
+      const stayConnected = document.getElementById(
+        "stayConnected"
+      ) as HTMLInputElement;
+
+      if (stayConnected.checked) {
+        localStorage.setItem(
+          "refresh_token",
+          Coopernet.oAuthToken.refresh_token
+        );
+      }
       navigate("/");
     } catch (error) {
       if (error instanceof Error) setError(error.message);
