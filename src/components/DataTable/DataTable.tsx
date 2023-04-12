@@ -38,9 +38,14 @@ function DataTable() {
                   return (
                     <li
                       key={data.id}
-                      className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 px-8 py-2 text-center"
+                      className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 text-center"
                     >
-                      {data.name}
+                      <Link
+                        className="block w-full px-8 py-2"
+                        to={`${data.id}`}
+                      >
+                        {data.name}
+                      </Link>
                     </li>
                   );
                 }
@@ -51,9 +56,12 @@ function DataTable() {
                 return (
                   <li
                     key={data.uid}
-                    className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 px-8 py-2 text-center"
+                    className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 text-center"
                   >
-                    <Link to={`${data.uid}/thematics`}>
+                    <Link
+                      className="block w-full px-8 py-2"
+                      to={`${data.uid}/thematics`}
+                    >
                       {data.uname}
                     </Link>
                   </li>
