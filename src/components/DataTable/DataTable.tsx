@@ -9,7 +9,7 @@ function DataTable() {
 
   return (
     <div className="mx-auto h-full w-11/12 sm:mt-8">
-      <div className="bg-white space-y-6 shadow-lg py-5 px-5">
+      <div className="bg-white px-5 py-5 shadow-lg space-y-6">
         <h1 className="pt-6 text-xl font-extrabold text-blue-800 2xl:text-2xl">
           {isThematic(datas[0]) ? "Mes thématiques" : "Les autres utilisateurs"}
         </h1>
@@ -27,8 +27,8 @@ function DataTable() {
             onChange={(event) => setFilter(event.target.value)}
           />
         </section>
-        <section className="flex flex-wrap gap-3 w-full">
-          <ul className="grid grid-cols-1 gap-1 bg-gray-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full">
+        <section className="flex w-full flex-wrap gap-3">
+          <ul className="grid w-full grid-cols-1 gap-1 bg-gray-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {datas.flatMap((data) => {
               const id = isThematic(data) ? data.id : data.uid;
               const name = isThematic(data) ? data.name : data.uname;
@@ -39,7 +39,7 @@ function DataTable() {
                   return (
                     <li
                       key={id}
-                      className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 text-center"
+                      className="rounded border border-blue-100 text-center hover:border-blue-600 hover:bg-blue-50"
                     >
                       <Link
                         className="block w-full px-8 py-2"

@@ -23,7 +23,7 @@ export default function Button({ data }: Props) {
   const name = isThematic(data) ? data.name : data.uname;
 
   return (
-    <li className="border-blue-800 hover:border p-2 hover:bg-blue-100">
+    <li className="border-blue-800 p-2 hover:border hover:bg-blue-100">
       <section className="flex justify-between">
         <Link className="flex-1" key={id} to={`/users/${id}/thematics`}>
           {name}
