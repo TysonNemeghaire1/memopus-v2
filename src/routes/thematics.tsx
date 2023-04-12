@@ -19,7 +19,7 @@ export async function loader() {
 export async function flatArrayLoader({ params }: LoaderFunctionArgs) {
   try {
     const thematics = await Coopernet.getThematics(
-      params?.userId ? params.userId : undefined
+      params?.userId === Coopernet.user.id ? undefined : params.userId
     );
     console.log(thematics, params);
     return mergeArrayRecursively(thematics);

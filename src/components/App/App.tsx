@@ -15,23 +15,13 @@ import {
   loader as thematicLoader,
 } from "../../routes/thematics";
 import ThematicForm from "../ThematicForm";
-import Coopernet from "../../services/Coopernet";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Layout />} loader={thematicLoader}>
         <Route index element={<HomeTable />} />
-        <Route
-          path={`${Coopernet.user.id}/thematics`}
-          element={<DataTable />}
-          loader={flatArrayLoader}
-        />
-        <Route
-          path="/thematics"
-          action={thematicAction}
-          loader={thematicLoader}
-        >
+        <Route path="/thematics" action={thematicAction}>
           <Route path=":thematicId" action={thematicAction}>
             <Route
               path="edit"
@@ -42,9 +32,9 @@ const router = createBrowserRouter(
         </Route>
         <Route path="/users" element={<DataTable />} loader={userLoader} />
         <Route
-            path={`/users/:userId/thematics`}
-            element={<DataTable />}
-            loader={flatArrayLoader}
+          path={`/users/:userId/thematics`}
+          element={<DataTable />}
+          loader={flatArrayLoader}
         />
       </Route>
       <Route path="/login" element={<Login />} />

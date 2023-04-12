@@ -64,7 +64,7 @@ function SideMenu({ thematics }: PropsInterface) {
             <li>
               <Link
                 className="flex items-center gap-2 p-2.5 hover:bg-blue-100"
-                to={`/${Coopernet.user.id}/thematics`}
+                to={`/users/${Coopernet.user.id}/thematics`}
               >
                 <IoMdPerson />
                 Mes thématiques
