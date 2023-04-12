@@ -88,14 +88,14 @@ function SideMenu({ thematics }: PropsInterface) {
 
         <nav className="mx-6 mt-8">
           <Container
-            info={{ title: "Mes thématiques", baseUrl: "/thematic/" }}
+            title="Mes thématiques"
             dataArray={thematics}
           />
         </nav>
         <nav className="mx-6 mt-4">
           {fetcher.state === "idle" && fetcher.data ? (
             <Container
-              info={{ title: "Autres utilisateurs", baseUrl: "/user/" }}
+              title="Autres utilisateurs"
               dataArray={fetcher.data}
             />
           ) : (

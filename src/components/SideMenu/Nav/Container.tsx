@@ -8,20 +8,17 @@ import InlineAddThematic from "../../InlineAddThematic/InlineAddThematic";
 
 interface Props {
   dataArray: Thematic[] | User[];
-  info: {
-    title: string;
-    baseUrl: string;
-  };
+  title: string;
 }
 
-export default function Container({ dataArray, info }: Props) {
+export default function Container({ dataArray, title }: Props) {
   const [showList, setShowList] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
   return (
     <>
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-lg font-bold text-blue-900">{info.title}</p>
+        <p className="text-lg font-bold text-blue-600">{title}</p>
         <div className="flex items-center gap-2">
           {isThematic(dataArray[0]) && (
             <button

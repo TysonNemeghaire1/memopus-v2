@@ -53,7 +53,7 @@ function HomeTable() {
     <>
       <div className="mx-auto h-full w-11/12">
         <h1 className="py-6 text-xl font-extrabold text-blue-800 2xl:text-2xl">
-          Accueil
+          Tableau de bord
         </h1>
         <table className="w-full overflow-hidden rounded-xl bg-white text-center text-sm text-blue-800 shadow-xl">
           <thead className="border-b-2 border-b-blue-800">
