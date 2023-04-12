@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Thematic, { isThematic } from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import Button from "./Button";
-import { Link } from "react-router-dom";
-import Coopernet from "../../../services/Coopernet";
 
 interface Props {
   dataArray: Thematic[] | User[];
@@ -53,28 +51,15 @@ function List({ dataArray, display }: Props) {
         )}
         <ul className={`flex flex-col pt-2`}>
           {dataArray.flatMap((data) => {
-            if (isThematic(data)) {
+            const id = isThematic(data) ? data.id : data.uid;
+            const name = isThematic(data) ? data.name : data.uname;
               if (
                 filter.length < 2 ||
-                data.name.toUpperCase().includes(filter.toUpperCase())
+                name.toUpperCase().includes(filter.toUpperCase())
               ) {
                 return (
-                  <Link to={`/users/${Coopernet.user.id}/thematics/${data.id}`}>
-                    <Button key={data.id} data={data} />
-                  </Link>
+                    <Button key={id} data={data} />
                 );
-              }
-            } else {
-              if (
-                filter.length < 2 ||
-                data.uname.toUpperCase().includes(filter.toUpperCase())
-              ) {
-                return (
-                  <Link to={`/users/${data.uid}/thematics`}>
-                    <Button key={data.uid} data={data} />
-                  </Link>
-                );
-              }
             }
             return [];
           })}

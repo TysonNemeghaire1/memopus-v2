@@ -5,6 +5,7 @@ import ActionButtonGroup from "./ActionButtonGroup";
 import Thematic, { isThematic } from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import InlineAddThematic from "../../InlineAddThematic/InlineAddThematic";
+import { Link } from "react-router-dom";
 
 interface Props {
   data: Thematic | User;
@@ -18,10 +19,15 @@ export default function Button({ data }: Props) {
     setShowForm(!showForm);
   };
 
+  const id = isThematic(data) ? data.id : data.uid;
+  const name = isThematic(data) ? data.name : data.uname;
+
   return (
-    <li className="border-blue-800 p-2.5 hover:border hover:bg-blue-100">
+    <li className="border-blue-800 hover:border p-2 hover:bg-blue-100">
       <section className="flex justify-between">
-        {isThematic(data) ? data.name : data.uname}
+        <Link className="flex-1" key={id} to={`/users/${id}/thematics`}>
+          {name}
+        </Link>
         <div className="flex items-center gap-1">
           {isThematic(data) && (
             <ActionButtonGroup
@@ -45,7 +51,10 @@ export default function Button({ data }: Props) {
         <InlineAddThematic key={data.id} pid={data.id} />
       )}
       {isThematic(data) && data.children && (
-        <List dataArray={data.children} display={{ showList }} />
+        <List
+          dataArray={data.children}
+          display={{ showList }}
+        />
       )}
     </li>
   );

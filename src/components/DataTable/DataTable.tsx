@@ -30,43 +30,26 @@ function DataTable() {
         <section className="flex flex-wrap gap-3 w-full">
           <ul className="grid grid-cols-1 gap-1 bg-gray-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full">
             {datas.flatMap((data) => {
-              if (isThematic(data)) {
+              const id = isThematic(data) ? data.id : data.uid;
+              const name = isThematic(data) ? data.name : data.uname;
                 if (
                   filter.length < 2 ||
-                  data.name.toUpperCase().includes(filter.toUpperCase())
+                  name.toUpperCase().includes(filter.toUpperCase())
                 ) {
                   return (
                     <li
-                      key={data.id}
+                      key={id}
                       className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 text-center"
                     >
                       <Link
                         className="block w-full px-8 py-2"
-                        to={`${data.id}`}
+                        to={isThematic(data) ? id : `${id}/thematics`}
                       >
-                        {data.name}
+                        {name}
                       </Link>
                     </li>
                   );
                 }
-              } else if (
-                filter.length < 2 ||
-                data.uname.toUpperCase().includes(filter.toUpperCase())
-              ) {
-                return (
-                  <li
-                    key={data.uid}
-                    className="rounded border border-blue-100 hover:border-blue-600 hover:bg-blue-50 text-center"
-                  >
-                    <Link
-                      className="block w-full px-8 py-2"
-                      to={`${data.uid}/thematics`}
-                    >
-                      {data.uname}
-                    </Link>
-                  </li>
-                );
-              }
               return [];
             })}
           </ul>
