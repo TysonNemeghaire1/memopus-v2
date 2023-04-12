@@ -7,7 +7,7 @@ import {
 import Layout from "../layouts/Layout";
 import HomeTable from "../HomeTable/HomeTable";
 import DataTable from "../DataTable/DataTable";
-import Login from "../Login/Login";
+import Login, {redirectIfConnected} from "../Login/Login";
 import { loader as userLoader } from "../../routes/users";
 import {
   action as thematicAction,
@@ -37,7 +37,7 @@ const router = createBrowserRouter(
           loader={flatArrayLoader}
         />
       </Route>
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login />} loader={redirectIfConnected} />
     </>
   )
 );

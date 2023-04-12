@@ -1,9 +1,14 @@
 // @flow
 import React, { useState } from "react";
 import Coopernet from "../../services/Coopernet";
-import { useNavigate } from "react-router-dom";
+import {redirect, useNavigate} from "react-router-dom";
 
 type LoginInput = "name" | "password";
+
+export function redirectIfConnected() {
+  if (Coopernet.user.id) return redirect("/");
+  return null;
+}
 
 export default function Login() {
   const navigate = useNavigate();
@@ -57,7 +62,7 @@ export default function Login() {
           Coopernet.oAuthToken.refresh_token
         );
       }
-      navigate("/");
+      return navigate("/");
     } catch (error) {
       if (error instanceof Error) setError(error.message);
       setIsPending(false);
