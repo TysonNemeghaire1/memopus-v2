@@ -37,10 +37,10 @@ function List({ dataArray, display }: Props) {
             <input
               type="text"
               name={`thematicFilter-${
-                isThematic(dataArray[0]) ? dataArray[0].id : dataArray[0].uid
+                isThematic(dataArray[0]) ? dataArray[0].id : `u-${dataArray[0].uid}`
               }`}
               id={`thematicFilter-${
-                isThematic(dataArray[0]) ? dataArray[0].id : dataArray[0].uid
+                isThematic(dataArray[0]) ? dataArray[0].id : `u-${dataArray[0].uid}`
               }`}
               placeholder="Taper votre recherche"
               className="w-9/12 rounded p-1 ring-1 ring-blue-600"
