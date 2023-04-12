@@ -9,6 +9,7 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
+import {disconnect} from "../Login/Login";
 
 interface PropsInterface {
   thematics: Thematic[];
@@ -79,25 +80,25 @@ function SideMenu({ thematics }: PropsInterface) {
                 Autres utilisateurs
               </Link>
             </li>
-            <li className="flex items-center gap-2 text-red-400 p-2.5 hover:bg-red-100">
-              <RiLogoutBoxFill />
-              Déconnexion
+            <li>
+              <Link
+                  onClick={disconnect}
+                to="/login"
+                className="flex items-center gap-2 text-red-400 p-2.5 hover:bg-red-100"
+              >
+                <RiLogoutBoxFill />
+                Déconnexion
+              </Link>
             </li>
           </ul>
         </nav>
 
         <nav className="mx-6 mt-8">
-          <Container
-            title="Mes thématiques"
-            dataArray={thematics}
-          />
+          <Container title="Mes thématiques" dataArray={thematics} />
         </nav>
         <nav className="mx-6 mt-4">
           {fetcher.state === "idle" && fetcher.data ? (
-            <Container
-              title="Autres utilisateurs"
-              dataArray={fetcher.data}
-            />
+            <Container title="Autres utilisateurs" dataArray={fetcher.data} />
           ) : (
             <fetcher.Form
               method="get"

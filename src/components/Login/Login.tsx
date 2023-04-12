@@ -1,7 +1,7 @@
 // @flow
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Coopernet from "../../services/Coopernet";
-import {redirect, useNavigate} from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 type LoginInput = "name" | "password";
 
@@ -19,6 +19,10 @@ export default function Login() {
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const isValidForm = inputs.name.value && inputs.password.value;
+
+  useEffect(() => {
+    disconnect();
+  }, []);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.name as LoginInput;
@@ -203,3 +207,15 @@ export default function Login() {
     </div>
   );
 }
+
+export function disconnect() {
+  Coopernet.user = { id: "", password: "", name: "" };
+  Coopernet.oAuthToken = {
+    refresh_token: "",
+    access_token: "",
+    token_type: "",
+    expires_in: 0,
+  };
+  localStorage.clear();
+}
+
