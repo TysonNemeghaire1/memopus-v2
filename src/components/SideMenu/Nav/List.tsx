@@ -8,7 +8,7 @@ interface Props {
   display: { showList: boolean; hideFilter?: boolean };
 }
 
-function List({ dataArray, display }: Props) {
+function List({dataArray, display}: Props) {
   const [filter, setFilter] = useState("");
 
   return (

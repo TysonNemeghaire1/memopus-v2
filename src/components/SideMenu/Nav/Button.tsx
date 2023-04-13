@@ -26,8 +26,15 @@ export default function Button({ data }: Props) {
   return (
     <li className="border-blue-800 p-2 hover:border hover:bg-blue-100">
       <section className="flex justify-between">
-        <Link className="flex-1" key={id}
-              to={isThematic(data) ? `/users/${Coopernet.user.id}/thematics` : `/users/${id}/thematics`}>
+        <Link
+            className="flex-1"
+            key={id}
+            to={
+              isThematic(data)
+                  ? `/users/${Coopernet.user.id}/thematics`
+                  : `/users/${id}/thematics`
+            }
+        >
           {name}
         </Link>
         <div className="flex items-center gap-1">
@@ -53,7 +60,7 @@ export default function Button({ data }: Props) {
         <InlineAddThematic key={data.id} pid={data.id} />
       )}
       {isThematic(data) && data.children && (
-        <List dataArray={data.children} display={{showList}}/>
+          <List dataArray={data.children} display={{showList}}/>
       )}
     </li>
   );

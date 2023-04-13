@@ -10,26 +10,26 @@ import {loader as loginLoader} from "../../routes/login";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-    <>
-      <Route path="/" element={<Layout />} loader={thematicLoader}>
-        <Route index element={<HomeTable />} />
-        <Route path="/thematics" action={thematicAction}>
-          <Route path=":thematicId" action={thematicAction}>
+        <>
+          <Route path="/" element={<Layout/>} loader={thematicLoader}>
+            <Route index element={<HomeTable/>}/>
+            <Route path="/thematics" action={thematicAction}>
+              <Route path=":thematicId" action={thematicAction}>
+                <Route
+                    path="edit"
+                    element={<ThematicForm/>}
+                    loader={flatArrayLoader}
+                />
+              </Route>
+            </Route>
+            <Route path="/users" element={<DataTable/>} loader={userLoader}/>
             <Route
-              path="edit"
-              element={<ThematicForm />}
-              loader={flatArrayLoader}
+                path={`/users/:userId/thematics`}
+                element={<DataTable/>}
+                loader={flatArrayLoader}
             />
           </Route>
-        </Route>
-        <Route path="/users" element={<DataTable/>} loader={userLoader}/>
-        <Route
-            path={`/users/:userId/thematics`}
-            element={<DataTable/>}
-            loader={flatArrayLoader}
-        />
-      </Route>
-      <Route path="/login" element={<Login/>} loader={loginLoader}/>
+          <Route path="/login" element={<Login/>} loader={loginLoader}/>
     </>
   )
 );
