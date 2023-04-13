@@ -29,11 +29,11 @@ function SideMenu({ thematics }: PropsInterface) {
   const isSmall = useSmallScreen();
   return (
       <aside
-          className={`h-screen w-fit 2xl:h-full 2xl:w-1/5 ${
-              showSideBar && isSmall && "fixed h-full w-full bg-white"
+          className={`max-h-full w-full 2xl:w-1/4 ${
+              showSideBar && isSmall && "fixed w-full bg-white"
           }`}
       >
-          <section className={`flex w-fit items-center justify-between p-5`}>
+          <section className={`flex items-center justify-between p-5`}>
             <p className="pr-6 text-3xl font-extrabold text-blue-800">Memopus</p>
             <button
                 className="2xl:hidden"
