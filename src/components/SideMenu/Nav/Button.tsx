@@ -1,11 +1,11 @@
-import React, {useState} from "react";
-import {FaChevronDown} from "react-icons/fa";
+import React, { useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
 import List from "./List";
 import ActionButtonGroup from "./ActionButtonGroup";
-import Thematic, {isThematic} from "../../../interfaces/Thematic";
+import Thematic, { isThematic } from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import InlineAddThematic from "../../InlineAddThematic/InlineAddThematic";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Coopernet from "../../../services/Coopernet";
 
 interface Props {
@@ -27,22 +27,23 @@ export default function Button({ data }: Props) {
     <li className="border-blue-800 p-2 hover:border hover:bg-blue-100">
       <section className="flex justify-between">
         <Link
-            className="flex-1"
-            key={id}
-            to={
-              isThematic(data)
-                  ? `/users/${Coopernet.user.id}/thematics`
-                  : `/users/${id}/thematics`
-            }
+          className="flex-1"
+          key={id}
+          to={
+            isThematic(data)
+              ? `/users/${Coopernet.user.id}/thematics`
+              : `/users/${id}/thematics`
+          }
+          state={isThematic(data) ? Coopernet.user.name : name}
         >
           {name}
         </Link>
         <div className="flex items-center gap-1">
           {isThematic(data) && (
-              <ActionButtonGroup
-                  thematic={data}
-                  showForm={{value: showForm, toggle: toggleShowForm}}
-              />
+            <ActionButtonGroup
+              thematic={data}
+              showForm={{ value: showForm, toggle: toggleShowForm }}
+            />
           )}
           {isThematic(data) && data.children && (
             <button
@@ -60,7 +61,7 @@ export default function Button({ data }: Props) {
         <InlineAddThematic key={data.id} pid={data.id} />
       )}
       {isThematic(data) && data.children && (
-          <List dataArray={data.children} display={{showList}}/>
+        <List dataArray={data.children} display={{ showList }} />
       )}
     </li>
   );

@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import Coopernet from "../../services/Coopernet";
-import {useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import Coopernet from "../services/Coopernet";
+import { useNavigate } from "react-router-dom";
 
 type LoginInput = "name" | "password";
 
