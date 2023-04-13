@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import Thematic, {isThematic} from "../../../interfaces/Thematic";
+import React, { useState } from "react";
+import Thematic, { isThematic } from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import Button from "./Button";
 
@@ -8,17 +8,17 @@ interface Props {
   display: { showList: boolean; hideFilter?: boolean };
 }
 
-function List({dataArray, display}: Props) {
+function List({ dataArray, display }: Props) {
   const [filter, setFilter] = useState("");
 
   return (
+    <div
+      className={`overflow-y-scroll transition-all ease-in-out duration-500 ease-in-out ${
+        display.showList ? "max-h-80" : "max-h-0"
+      }`}
+    >
       <div
-          className={`overflow-y-scroll transition-all ease-in-out duration-500 ease-in-out ${
-              display.showList ? "max-h-80" : "max-h-0"
-          }`}
-      >
-        <div
-            className={`transition duration-700 text-blue-800 ${
+        className={`transition duration-700 text-blue-800 ${
           !display.showList && "-translate-y-full"
         }`}
       >
@@ -37,14 +37,14 @@ function List({dataArray, display}: Props) {
             <input
               type="text"
               name={`thematicFilter-${
-                  isThematic(dataArray[0])
-                      ? dataArray[0].id
-                      : `u-${dataArray[0].uid}`
+                isThematic(dataArray[0])
+                  ? dataArray[0].id
+                  : `u-${dataArray[0].uid}`
               }`}
               id={`thematicFilter-${
-                  isThematic(dataArray[0])
-                      ? dataArray[0].id
-                      : `u-${dataArray[0].uid}`
+                isThematic(dataArray[0])
+                  ? dataArray[0].id
+                  : `u-${dataArray[0].uid}`
               }`}
               placeholder="Taper votre recherche"
               className="w-9/12 rounded p-1 ring-1 ring-blue-600"
@@ -58,10 +58,10 @@ function List({dataArray, display}: Props) {
             const id = isThematic(data) ? data.id : data.uid;
             const name = isThematic(data) ? data.name : data.uname;
             if (
-                filter.length < 2 ||
-                name.toUpperCase().includes(filter.toUpperCase())
+              filter.length < 2 ||
+              name.toUpperCase().includes(filter.toUpperCase())
             ) {
-              return <Button key={id} data={data}/>;
+              return <Button key={id} data={data} />;
             }
             return [];
           })}

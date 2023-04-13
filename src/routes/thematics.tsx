@@ -1,15 +1,20 @@
 import Coopernet from "../services/Coopernet";
-import {ActionFunctionArgs, LoaderFunctionArgs, redirect,} from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  redirect,
+} from "react-router-dom";
 import Thematic from "../interfaces/Thematic";
-import {loginWithLocalStorage} from "../services/login";
+import { loginWithLocalStorage } from "../services/login";
 
 export async function loader() {
   try {
-    if (!Coopernet.user.id && !(await loginWithLocalStorage()))
+    if (!Coopernet.user.id && !(await loginWithLocalStorage())) {
       return redirect("/login");
+    }
 
     const thematics = await Coopernet.getThematics();
-    return {thematics};
+    return { thematics };
   } catch (e) {
     console.error(e instanceof Error ? e.message : "");
     return redirect("/login");
@@ -18,10 +23,11 @@ export async function loader() {
 
 export async function flatArrayLoader({ params }: LoaderFunctionArgs) {
   try {
-    if (!Coopernet.user.id && !(await loginWithLocalStorage()))
+    if (!Coopernet.user.id && !(await loginWithLocalStorage())) {
       return redirect("/login");
+    }
     const thematics = await Coopernet.getThematics(
-        params?.userId === Coopernet.user.id ? undefined : params.userId
+      params?.userId === Coopernet.user.id ? undefined : params.userId
     );
     return mergeArrayRecursively(thematics);
   } catch (e) {
@@ -34,23 +40,25 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const action = formData.get("action");
 
   if (action === "delete") {
-    if (window.confirm("Voulez vous réellement supprimer cette thématique ?"))
+    if (window.confirm("Voulez vous réellement supprimer cette thématique ?")) {
       await Coopernet.deleteThematic(params.thematicId as string);
+    }
     return null;
-  } else {
-    const label = formData.get("name") as string;
-    const pid = formData.get("pid") as string;
+  }
 
-    if (action === "add") {
-      return await Coopernet.addOrEditThematic(label, pid ? pid : undefined);
-    }
-    if (action === "edit") {
-      return await Coopernet.addOrEditThematic(
-        label,
-        pid ? parseInt(pid) : undefined,
-        params.thematicId ? parseInt(params.thematicId as string) : undefined
-      );
-    }
+  const label = formData.get("name") as string;
+  const pid = formData.get("pid") as string;
+
+  if (action === "add") {
+    return await Coopernet.addOrEditThematic(label, pid ? pid : undefined);
+  }
+
+  if (action === "edit") {
+    return await Coopernet.addOrEditThematic(
+      label,
+      pid ? parseInt(pid) : undefined,
+      params.thematicId ? parseInt(params.thematicId as string) : undefined
+    );
   }
 }
 

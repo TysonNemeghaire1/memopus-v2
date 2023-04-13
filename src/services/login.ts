@@ -11,7 +11,7 @@ export async function loginWithLocalStorage() {
 }
 
 export function disconnect() {
-  Coopernet.user = {id: "", password: "", name: ""};
+  Coopernet.user = { id: "", password: "", name: "" };
   Coopernet.oAuthToken = {
     refresh_token: "",
     access_token: "",
