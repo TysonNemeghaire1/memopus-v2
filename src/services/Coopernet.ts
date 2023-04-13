@@ -14,7 +14,10 @@ interface oAuth {
 class Coopernet {
   //region VARIABLES
 
-  static url = process.env.NODE_ENV === "production" ? "https://coopernet.fr/" : "http://local.coopernet.my/";
+  static url =
+    process.env.NODE_ENV === "production"
+      ? "https://coopernet.fr/"
+      : "http://local.coopernet.my/";
   static user: { id: string; name: string; password: string } = {
     id: "",
     name: "",
@@ -103,8 +106,8 @@ class Coopernet {
 
   static login = async () => {
     Coopernet.oAuthToken.refresh_token
-        ? await Coopernet.fetchOauth(true)
-        : await Coopernet.setOAuthToken();
+      ? await Coopernet.fetchOauth(true)
+      : await Coopernet.setOAuthToken();
     const response = await fetch(`${Coopernet.url}/memo/is_logged`, {
       method: "GET",
       headers: {
@@ -124,10 +127,10 @@ class Coopernet {
 
   //#region TABLEAU ACCUEIL
 
-  static fetchTermsAndColumns = async (user_id?: number) => {
+  static fetchTermsAndColumns = async (user_id?: string) => {
     await Coopernet.setOAuthToken();
     const response = await fetch(
-      `${Coopernet.url}rest/cards${user_id ? "/" + user_id : ""}?_format=json`,
+      `${Coopernet.url}rest/cards${user_id ? `/${user_id}` : ""}?_format=json`,
       {
         method: "GET",
         headers: {
@@ -141,7 +144,7 @@ class Coopernet {
     );
   };
   static getTermsAndColumns = async (
-    user_id?: number
+    user_id?: string
   ): Promise<NumberOfTermInColumn[]> => {
     const sortedTerms = [];
     const datas = user_id
@@ -248,6 +251,25 @@ class Coopernet {
   };
 
   //#endregion
+
+  static getCards = async (thematicId: string, userId = Coopernet.user.id) => {
+    await Coopernet.setOAuthToken();
+    const response = await fetch(
+      `${Coopernet.url}memo/list_cards_term/${userId}/${thematicId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `${this.oAuthToken.token_type} ${this.oAuthToken.access_token}`,
+        },
+      }
+    );
+    if (response.ok) return response.json();
+    else
+      throw new Error(
+        "Problème lors de la récupération des cartes :  " + response.status
+      );
+  };
 
   static getUsers = async (): Promise<User[]> => {
     await Coopernet.setOAuthToken();
