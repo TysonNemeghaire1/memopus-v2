@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Thematic, { isThematic } from "../../../interfaces/Thematic";
+import React, {useState} from "react";
+import Thematic, {isThematic} from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import Button from "./Button";
 
@@ -37,10 +37,14 @@ function List({ dataArray, display }: Props) {
             <input
               type="text"
               name={`thematicFilter-${
-                isThematic(dataArray[0]) ? dataArray[0].id : `u-${dataArray[0].uid}`
+                  isThematic(dataArray[0])
+                      ? dataArray[0].id
+                      : `u-${dataArray[0].uid}`
               }`}
               id={`thematicFilter-${
-                isThematic(dataArray[0]) ? dataArray[0].id : `u-${dataArray[0].uid}`
+                  isThematic(dataArray[0])
+                      ? dataArray[0].id
+                      : `u-${dataArray[0].uid}`
               }`}
               placeholder="Taper votre recherche"
               className="w-9/12 rounded p-1 ring-1 ring-blue-600"
@@ -53,13 +57,11 @@ function List({ dataArray, display }: Props) {
           {dataArray.flatMap((data) => {
             const id = isThematic(data) ? data.id : data.uid;
             const name = isThematic(data) ? data.name : data.uname;
-              if (
+            if (
                 filter.length < 2 ||
                 name.toUpperCase().includes(filter.toUpperCase())
-              ) {
-                return (
-                    <Button key={id} data={data} />
-                );
+            ) {
+              return <Button key={id} data={data}/>;
             }
             return [];
           })}

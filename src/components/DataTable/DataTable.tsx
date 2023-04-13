@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
-import Thematic, { isThematic } from "../../interfaces/Thematic";
+import React, {useState} from "react";
+import {Link, useLoaderData} from "react-router-dom";
+import Thematic, {isThematic} from "../../interfaces/Thematic";
 import User from "../../interfaces/User";
 
 function DataTable() {
@@ -32,24 +32,24 @@ function DataTable() {
             {datas.flatMap((data) => {
               const id = isThematic(data) ? data.id : data.uid;
               const name = isThematic(data) ? data.name : data.uname;
-                if (
+              if (
                   filter.length < 2 ||
                   name.toUpperCase().includes(filter.toUpperCase())
-                ) {
-                  return (
+              ) {
+                return (
                     <li
-                      key={id}
-                      className="rounded border border-blue-100 text-center hover:border-blue-600 hover:bg-blue-50"
+                        key={id}
+                        className="rounded border border-blue-100 text-center hover:border-blue-600 hover:bg-blue-50"
                     >
                       <Link
-                        className="block w-full px-8 py-2"
-                        to={isThematic(data) ? id : `${id}/thematics`}
+                          className="block w-full px-8 py-2"
+                          to={isThematic(data) ? id : `${id}/thematics`}
                       >
                         {name}
                       </Link>
                     </li>
-                  );
-                }
+                );
+              }
               return [];
             })}
           </ul>

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa";
+import React, {useState} from "react";
+import {FaChevronDown} from "react-icons/fa";
 import List from "./List";
 import ActionButtonGroup from "./ActionButtonGroup";
-import Thematic, { isThematic } from "../../../interfaces/Thematic";
+import Thematic, {isThematic} from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import InlineAddThematic from "../../InlineAddThematic/InlineAddThematic";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 interface Props {
   data: Thematic | User;
@@ -51,10 +51,7 @@ export default function Button({ data }: Props) {
         <InlineAddThematic key={data.id} pid={data.id} />
       )}
       {isThematic(data) && data.children && (
-        <List
-          dataArray={data.children}
-          display={{ showList }}
-        />
+        <List dataArray={data.children} display={{showList}}/>
       )}
     </li>
   );
