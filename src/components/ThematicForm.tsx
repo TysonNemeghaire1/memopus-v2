@@ -1,5 +1,5 @@
 import React from "react";
-import { useFetcher, useLoaderData, useLocation } from "react-router-dom";
+import {useFetcher, useLoaderData, useLocation} from "react-router-dom";
 import Thematic from "../interfaces/Thematic";
 
 // TODO Transition pendant la modification
@@ -11,17 +11,17 @@ function ThematicForm() {
   const currentThematic: Thematic = location.state?.data;
 
   return (
-    <div className="mx-auto h-full w-11/12 sm:mt-8">
+    <div className="mx-auto h-full w-11/12 sm:my-8">
       <fetcher.Form
-        key={currentThematic.id}
-        className={"bg-white flex flex-col shadow-lg py-5 px-5"}
-        method="post"
-        action={`/thematics/${currentThematic.id}`}
+          key={currentThematic.id}
+          className={"bg-white flex flex-col shadow-lg py-5 px-5"}
+          method="post"
+          action={`/thematics/${currentThematic.id}`}
       >
         <h1 className="mb-6 text-xl font-extrabold">
           {currentThematic
-            ? `Modifier le thème ${currentThematic.name}`
-            : "Ajouter une thématique"}
+              ? `Modifier le thème ${currentThematic.name}`
+              : "Ajouter une thématique"}
         </h1>
         <section className="flex flex-col gap-1">
           <label htmlFor="name" className="mb-0 text-lg font-semibold">
