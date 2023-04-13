@@ -8,31 +8,21 @@ import Thematic from "../interfaces/Thematic";
 
 export async function loader() {
   try {
-    if (!Coopernet.user.id) {
-      const refreshToken = localStorage.getItem("refresh_token");
-      if (refreshToken) {
-        Coopernet.oAuthToken.refresh_token = refreshToken;
-        await Coopernet.login();
-
-        localStorage.setItem(
-          "refresh_token",
-          Coopernet.oAuthToken.refresh_token
-        );
-      } else return redirect("/login");
-    }
+    if (!(await isConnected())) return redirect("/login");
     const thematics = await Coopernet.getThematics();
     return { thematics };
   } catch (e) {
+    console.error(e instanceof Error ? e.message : "")
     return redirect("/login");
   }
 }
 
 export async function flatArrayLoader({ params }: LoaderFunctionArgs) {
   try {
+    if (!(await isConnected())) return redirect("/login");
     const thematics = await Coopernet.getThematics(
       params?.userId === Coopernet.user.id ? undefined : params.userId
     );
-    console.log(thematics, params);
     return mergeArrayRecursively(thematics);
   } catch (e) {
     return { error: "Pas de données" };
@@ -44,17 +34,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const action = formData.get("action");
 
   if (action === "delete") {
-    if (window.confirm("Voulez vous réellement supprimer cette thématique ?")) await Coopernet.deleteThematic(params.thematicId as string);
+    if (window.confirm("Voulez vous réellement supprimer cette thématique ?"))
+      await Coopernet.deleteThematic(params.thematicId as string);
     return null;
   } else {
     const label = formData.get("name") as string;
     const pid = formData.get("pid") as string;
 
     if (action === "add") {
-      return await Coopernet.addOrEditThematic(
-        label,
-        pid ? pid : undefined
-      );
+      return await Coopernet.addOrEditThematic(label, pid ? pid : undefined);
     }
     if (action === "edit") {
       return await Coopernet.addOrEditThematic(
@@ -77,3 +65,19 @@ const mergeArrayRecursively = (
   }
   return new_array;
 };
+
+async function isConnected() {
+  if (!Coopernet.user.id) {
+    const refreshToken = localStorage.getItem("refresh_token");
+    if (refreshToken) {
+      Coopernet.oAuthToken.refresh_token = refreshToken;
+      await Coopernet.login();
+      localStorage.setItem(
+          "refresh_token",
+          Coopernet.oAuthToken.refresh_token
+      );
+    } else {
+      return false
+    };
+  }
+}

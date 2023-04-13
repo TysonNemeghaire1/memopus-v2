@@ -174,7 +174,7 @@ class Coopernet {
 
   //#endregion
 
-  //#region TERMS ALIAS thematics
+  //#region TERMS ALIAS THEMATICS
 
   static getThematics = async (
     userId: string = Coopernet.user.id
