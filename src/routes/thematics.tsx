@@ -1,27 +1,27 @@
 import Coopernet from "../services/Coopernet";
-import {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  redirect,
-} from "react-router-dom";
+import {ActionFunctionArgs, LoaderFunctionArgs, redirect,} from "react-router-dom";
 import Thematic from "../interfaces/Thematic";
+import {loginWithLocalStorage} from "../services/login";
 
 export async function loader() {
   try {
-    if (!(await isConnected())) return redirect("/login");
+    if (!Coopernet.user.id && !(await loginWithLocalStorage()))
+      return redirect("/login");
+
     const thematics = await Coopernet.getThematics();
-    return { thematics };
+    return {thematics};
   } catch (e) {
-    console.error(e instanceof Error ? e.message : "")
+    console.error(e instanceof Error ? e.message : "");
     return redirect("/login");
   }
 }
 
 export async function flatArrayLoader({ params }: LoaderFunctionArgs) {
   try {
-    if (!(await isConnected())) return redirect("/login");
+    if (!Coopernet.user.id && !(await loginWithLocalStorage()))
+      return redirect("/login");
     const thematics = await Coopernet.getThematics(
-      params?.userId === Coopernet.user.id ? undefined : params.userId
+        params?.userId === Coopernet.user.id ? undefined : params.userId
     );
     return mergeArrayRecursively(thematics);
   } catch (e) {
@@ -65,19 +65,3 @@ const mergeArrayRecursively = (
   }
   return new_array;
 };
-
-async function isConnected() {
-  if (!Coopernet.user.id) {
-    const refreshToken = localStorage.getItem("refresh_token");
-    if (refreshToken) {
-      Coopernet.oAuthToken.refresh_token = refreshToken;
-      await Coopernet.login();
-      localStorage.setItem(
-          "refresh_token",
-          Coopernet.oAuthToken.refresh_token
-      );
-    } else {
-      return false
-    };
-  }
-}

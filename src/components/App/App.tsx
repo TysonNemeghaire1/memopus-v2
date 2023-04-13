@@ -1,23 +1,15 @@
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider,} from "react-router-dom";
 import Layout from "../layouts/Layout";
 import HomeTable from "../HomeTable/HomeTable";
 import DataTable from "../DataTable/DataTable";
-import Login, {redirectIfConnected} from "../Login/Login";
-import { loader as userLoader } from "../../routes/users";
-import {
-  action as thematicAction,
-  flatArrayLoader,
-  loader as thematicLoader,
-} from "../../routes/thematics";
+import Login from "../Login/Login";
 import ThematicForm from "../ThematicForm";
+import {loader as userLoader} from "../../routes/users";
+import {action as thematicAction, flatArrayLoader, loader as thematicLoader,} from "../../routes/thematics";
+import {loader as loginLoader} from "../../routes/login";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
+    createRoutesFromElements(
     <>
       <Route path="/" element={<Layout />} loader={thematicLoader}>
         <Route index element={<HomeTable />} />
@@ -30,14 +22,14 @@ const router = createBrowserRouter(
             />
           </Route>
         </Route>
-        <Route path="/users" element={<DataTable />} loader={userLoader} />
+        <Route path="/users" element={<DataTable/>} loader={userLoader}/>
         <Route
-          path={`/users/:userId/thematics`}
-          element={<DataTable />}
-          loader={flatArrayLoader}
+            path={`/users/:userId/thematics`}
+            element={<DataTable/>}
+            loader={flatArrayLoader}
         />
       </Route>
-      <Route path="/login" element={<Login />} loader={redirectIfConnected} />
+      <Route path="/login" element={<Login/>} loader={loginLoader}/>
     </>
   )
 );

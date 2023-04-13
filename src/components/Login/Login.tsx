@@ -1,24 +1,8 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Coopernet from "../../services/Coopernet";
-import { redirect, useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 type LoginInput = "name" | "password";
-
-export async function redirectIfConnected() {
-  try {
-    if (Coopernet.user.id) return redirect("/");
-    const refreshToken = localStorage.getItem("refresh_token");
-    if (refreshToken) {
-      Coopernet.oAuthToken.refresh_token = refreshToken;
-      await Coopernet.login();
-      localStorage.setItem("refresh_token", Coopernet.oAuthToken.refresh_token);
-      return redirect("/");
-    }
-    return null;
-  } catch (e) {
-    return null;
-  }
-}
 
 export default function Login() {
   const navigate = useNavigate();
@@ -212,15 +196,4 @@ export default function Login() {
       </main>
     </div>
   );
-}
-
-export function disconnect() {
-  Coopernet.user = { id: "", password: "", name: "" };
-  Coopernet.oAuthToken = {
-    refresh_token: "",
-    access_token: "",
-    token_type: "",
-    expires_in: 0,
-  };
-  localStorage.clear();
 }

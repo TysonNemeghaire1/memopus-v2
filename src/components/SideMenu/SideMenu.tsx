@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Link, useFetcher } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useFetcher} from "react-router-dom";
 import Container from "./Nav/Container";
-import { useSmallScreen } from "../../hooks/useSmallScreen";
+import {useSmallScreen} from "../../hooks/useSmallScreen";
 import Thematic from "../../interfaces/Thematic";
 import Coopernet from "../../services/Coopernet";
-import { IoPeople } from "react-icons/io5";
-import { RiLogoutBoxFill } from "react-icons/ri";
-import { IoMdPerson } from "react-icons/io";
-import { FaHome } from "react-icons/fa";
-import { HiMenu } from "react-icons/hi";
-import {disconnect} from "../Login/Login";
+import {disconnect} from "../../services/login";
+import {IoPeople} from "react-icons/io5";
+import {RiLogoutBoxFill} from "react-icons/ri";
+import {IoMdPerson} from "react-icons/io";
+import {FaHome} from "react-icons/fa";
+import {HiMenu} from "react-icons/hi";
 
 interface PropsInterface {
   thematics: Thematic[];
@@ -83,8 +83,8 @@ function SideMenu({ thematics }: PropsInterface) {
             <li>
               <Link
                   onClick={disconnect}
-                to="/login"
-                className="flex items-center gap-2 text-red-400 p-2.5 hover:bg-red-100"
+                  to="/login"
+                  className="flex items-center gap-2 text-red-400 p-2.5 hover:bg-red-100"
               >
                 <RiLogoutBoxFill />
                 Déconnexion
