@@ -6,6 +6,7 @@ import Thematic, {isThematic} from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import InlineAddThematic from "../../InlineAddThematic/InlineAddThematic";
 import {Link} from "react-router-dom";
+import Coopernet from "../../../services/Coopernet";
 
 interface Props {
   data: Thematic | User;
@@ -25,15 +26,16 @@ export default function Button({ data }: Props) {
   return (
     <li className="border-blue-800 p-2 hover:border hover:bg-blue-100">
       <section className="flex justify-between">
-        <Link className="flex-1" key={id} to={`/users/${id}/thematics`}>
+        <Link className="flex-1" key={id}
+              to={isThematic(data) ? `/users/${Coopernet.user.id}/thematics` : `/users/${id}/thematics`}>
           {name}
         </Link>
         <div className="flex items-center gap-1">
           {isThematic(data) && (
-            <ActionButtonGroup
-              thematic={data}
-              showForm={{ value: showForm, toggle: toggleShowForm }}
-            />
+              <ActionButtonGroup
+                  thematic={data}
+                  showForm={{value: showForm, toggle: toggleShowForm}}
+              />
           )}
           {isThematic(data) && data.children && (
             <button
