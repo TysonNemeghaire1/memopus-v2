@@ -30,8 +30,8 @@ const router = createBrowserRouter(
             />
           </Route>
           <Route path="/login" element={<Login/>} loader={loginLoader}/>
-    </>
-  )
+        </>
+    )
 );
 
 function App() {

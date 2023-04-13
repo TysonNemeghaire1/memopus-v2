@@ -12,13 +12,13 @@ function List({dataArray, display}: Props) {
   const [filter, setFilter] = useState("");
 
   return (
-    <div
-      className={`overflow-y-scroll transition-all ease-in-out duration-500 ease-in-out ${
-        display.showList ? "max-h-80" : "max-h-0"
-      }`}
-    >
       <div
-        className={`transition duration-700 text-blue-800 ${
+          className={`overflow-y-scroll transition-all ease-in-out duration-500 ease-in-out ${
+              display.showList ? "max-h-80" : "max-h-0"
+          }`}
+      >
+        <div
+            className={`transition duration-700 text-blue-800 ${
           !display.showList && "-translate-y-full"
         }`}
       >

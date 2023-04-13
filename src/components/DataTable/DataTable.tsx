@@ -19,16 +19,16 @@ function DataTable() {
             </label>
             <input
                 type="text"
-            name="thematicFilter"
-            id="thematicFilter"
-            placeholder="Taper votre recherche"
-            className="w-fit rounded-lg ring-1 ring-blue-600 p-1.5"
-            value={filter}
-            onChange={(event) => setFilter(event.target.value)}
-          />
-        </section>
-        <section className="flex w-full flex-wrap gap-3">
-          <ul className="grid w-full grid-cols-1 gap-1 bg-gray-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                name="thematicFilter"
+                id="thematicFilter"
+                placeholder="Taper votre recherche"
+                className="w-fit rounded-lg ring-1 ring-blue-600 p-1.5"
+                value={filter}
+                onChange={(event) => setFilter(event.target.value)}
+            />
+          </section>
+          <section className="flex w-full flex-wrap gap-3">
+            <ul className="grid w-full grid-cols-1 gap-1 bg-gray-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {datas.flatMap((data) => {
               const id = isThematic(data) ? data.id : data.uid;
               const name = isThematic(data) ? data.name : data.uname;
