@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CardContainer from "../layout/Containers/CardContainer";
 import Thematic from "../interfaces/Thematic";
-import { useLoaderData, useLocation, useParams } from "react-router-dom";
+import { useLoaderData, useLocation } from "react-router-dom";
 import User from "../interfaces/User";
 import DataListComponent from "../components/DataList/DataList";
 
@@ -16,7 +16,7 @@ function DataList({ title }: Props) {
   return (
     <CardContainer>
       <div className="bg-white px-5 py-5 shadow-lg space-y-6">
-        <h1 className="pt-6 text-xl font-extrabold text-blue-800 2xl:text-2xl">
+        <h1 className="pt-6 text-xl font-extrabold text-blue-800 xl:text-2xl">
           {title} {state && `de ${state}`}
         </h1>
         <section className="flex flex-col gap-1">

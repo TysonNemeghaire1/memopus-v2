@@ -11,9 +11,9 @@ const Layout = () => {
   const { thematics }: LoaderData = useLoaderData() as LoaderData;
   return (
     <>
-      <div className="flex min-h-screen flex-col 2xl:flex-row overflow-hidden">
+      <div className="flex min-h-screen flex-col xl:flex-row overflow-hidden">
         <SideMenu thematics={thematics} />
-        <main className="max-h-full w-full bg-gray-50">
+        <main className="w-full bg-gray-50">
           <Outlet />
         </main>
       </div>

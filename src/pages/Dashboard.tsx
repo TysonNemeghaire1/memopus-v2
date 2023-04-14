@@ -8,7 +8,7 @@ function Dashboard() {
   const numberOfTermInColumn = useLoaderData() as NumberOfTermInColumn[];
   return (
     <Container>
-      <h1 className="py-6 text-xl font-extrabold text-blue-800 2xl:text-2xl">
+      <h1 className="py-6 text-xl font-extrabold text-blue-800 xl:text-2xl">
         Tableau de bord
       </h1>
       <ThematicTable numberOfTermInColumn={numberOfTermInColumn} />
