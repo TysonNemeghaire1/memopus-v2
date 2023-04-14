@@ -9,9 +9,10 @@ import InlineAddThematic from "../../InlineAddThematic/InlineAddThematic";
 interface Props {
   dataArray: Thematic[] | User[];
   title: string;
+  hideSideBar: () => void;
 }
 
-export default function Container({ dataArray, title }: Props) {
+export default function Container({ dataArray, title, hideSideBar }: Props) {
   const [showList, setShowList] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
@@ -52,6 +53,7 @@ export default function Container({ dataArray, title }: Props) {
         <List
           dataArray={dataArray}
           display={{ showList, hideFilter: showForm }}
+          hideSideBar={hideSideBar}
         />
       }
     </>

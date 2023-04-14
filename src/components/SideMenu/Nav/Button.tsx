@@ -10,9 +10,10 @@ import Coopernet from "../../../services/Coopernet";
 
 interface Props {
   data: Thematic | User;
+  hideSideBar: () => void;
 }
 
-export default function Button({ data }: Props) {
+export default function Button({ data, hideSideBar }: Props) {
   const [showList, setShowList] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
@@ -35,6 +36,7 @@ export default function Button({ data }: Props) {
               : `/users/${id}/thematics`
           }
           state={isThematic(data) ? Coopernet.user.name : name}
+          onClick={hideSideBar}
         >
           {name}
         </Link>
@@ -43,6 +45,7 @@ export default function Button({ data }: Props) {
             <ActionButtonGroup
               thematic={data}
               showForm={{ value: showForm, toggle: toggleShowForm }}
+              hideSideBar={hideSideBar}
             />
           )}
           {isThematic(data) && data.children && (
@@ -61,7 +64,11 @@ export default function Button({ data }: Props) {
         <InlineAddThematic key={data.id} pid={data.id} />
       )}
       {isThematic(data) && data.children && (
-        <List dataArray={data.children} display={{ showList }} />
+        <List
+          dataArray={data.children}
+          display={{ showList }}
+          hideSideBar={hideSideBar}
+        />
       )}
     </li>
   );

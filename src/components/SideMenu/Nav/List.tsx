@@ -6,9 +6,10 @@ import Button from "./Button";
 interface Props {
   dataArray: Thematic[] | User[];
   display: { showList: boolean; hideFilter?: boolean };
+  hideSideBar: () => void;
 }
 
-function List({ dataArray, display }: Props) {
+function List({ dataArray, display, hideSideBar }: Props) {
   const [filter, setFilter] = useState("");
 
   return (
@@ -61,7 +62,7 @@ function List({ dataArray, display }: Props) {
               filter.length < 2 ||
               name.toUpperCase().includes(filter.toUpperCase())
             ) {
-              return <Button key={id} data={data} />;
+              return <Button key={id} data={data} hideSideBar={hideSideBar} />;
             }
             return [];
           })}

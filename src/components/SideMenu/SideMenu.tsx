@@ -27,16 +27,22 @@ function SideMenu({ thematics }: PropsInterface) {
   const fetcher = useFetcher();
   const [showSideBar, setShowSideBar] = useState(false);
   const isSmall = useSmallScreen();
+
+  // TODO Cacher le menu après avoir charger les données
+  function hideSideBar() {
+    if (isSmall) setShowSideBar(false);
+  }
+
   return (
     <aside
-      className={`max-h-full w-full 2xl:w-1/4 ${
-        showSideBar && isSmall && "fixed w-full bg-white"
+      className={`max-h-full w-full xl:max-w-max ${
+        showSideBar && isSmall && "fixed h-full w-full bg-white"
       }`}
     >
       <section className={`flex items-center justify-between p-5`}>
         <p className="pr-6 text-3xl font-extrabold text-blue-800">Memopus</p>
         <button
-          className="2xl:hidden"
+          className="xl:hidden"
           onClick={() => setShowSideBar(!showSideBar)}
         >
           <HiMenu className="text-2xl text-blue-800" />
@@ -57,6 +63,7 @@ function SideMenu({ thematics }: PropsInterface) {
               <Link
                 className="flex items-center gap-2 p-2.5 hover:bg-blue-100"
                 to="/"
+                onClick={hideSideBar}
               >
                 <FaHome />
                 Accueil
@@ -67,6 +74,7 @@ function SideMenu({ thematics }: PropsInterface) {
                 className="flex items-center gap-2 p-2.5 hover:bg-blue-100"
                 to={`/users/${Coopernet.user.id}/thematics`}
                 state={Coopernet.user.name}
+                onClick={hideSideBar}
               >
                 <IoMdPerson />
                 Mes thématiques
@@ -75,6 +83,7 @@ function SideMenu({ thematics }: PropsInterface) {
             <li>
               <Link
                 to="/users"
+                onClick={hideSideBar}
                 className="flex items-center gap-2 p-2.5 hover:bg-blue-100"
               >
                 <IoPeople />
@@ -83,7 +92,10 @@ function SideMenu({ thematics }: PropsInterface) {
             </li>
             <li>
               <Link
-                onClick={disconnect}
+                onClick={() => {
+                  disconnect();
+                  hideSideBar();
+                }}
                 to="/login"
                 className="flex items-center gap-2 text-red-400 p-2.5 hover:bg-red-100"
               >
@@ -95,11 +107,19 @@ function SideMenu({ thematics }: PropsInterface) {
         </nav>
 
         <nav className="mx-6 mt-8">
-          <Container title="Mes thématiques" dataArray={thematics} />
+          <Container
+            title="Mes thématiques"
+            dataArray={thematics}
+            hideSideBar={hideSideBar}
+          />
         </nav>
         <nav className="mx-6 mt-4">
           {fetcher.state === "idle" && fetcher.data ? (
-            <Container title="Autres utilisateurs" dataArray={fetcher.data} />
+            <Container
+              title="Autres utilisateurs"
+              dataArray={fetcher.data}
+              hideSideBar={hideSideBar}
+            />
           ) : (
             <fetcher.Form
               method="get"

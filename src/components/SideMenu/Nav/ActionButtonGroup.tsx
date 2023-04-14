@@ -9,9 +9,10 @@ import Thematic from "../../../interfaces/Thematic";
 interface Props {
   thematic: Thematic;
   showForm: { value: boolean; toggle: () => void };
+  hideSideBar: () => void;
 }
 
-function ActionButtonGroup({ thematic, showForm }: Props) {
+function ActionButtonGroup({ thematic, showForm, hideSideBar }: Props) {
   const fetcher = useFetcher();
   const [showGroupButton, setShowGroupButton] = useState(false);
   return (
@@ -44,6 +45,7 @@ function ActionButtonGroup({ thematic, showForm }: Props) {
           state={{ data: thematic }}
           title="Modifier la thématique"
           className="rounded p-1 text-green-600 hover:bg-green-200"
+          onClick={hideSideBar}
         >
           <AiFillEdit />
         </Link>
