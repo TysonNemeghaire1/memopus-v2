@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa";
+import React, {useState} from "react";
+import {FaChevronDown} from "react-icons/fa";
 import List from "./List";
 import ActionButtonGroup from "./ActionButtonGroup";
-import Thematic, { isThematic } from "../../../interfaces/Thematic";
+import Thematic, {isThematic} from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import InlineAddThematic from "../../InlineAddThematic/InlineAddThematic";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Coopernet from "../../../services/Coopernet";
 
 interface Props {
@@ -28,24 +28,27 @@ export default function Button({ data, hideSideBar }: Props) {
     <li className="border-blue-800 p-2 hover:border hover:bg-blue-100">
       <section className="flex justify-between">
         <Link
-          className="flex-1"
-          key={id}
-          to={
-            isThematic(data)
-              ? `/users/${Coopernet.user.id}/thematics/${data.id}`
-              : `/users/${id}/thematics`
-          }
-          state={isThematic(data) ? Coopernet.user.name : name}
-          onClick={hideSideBar}
+            className="flex-1"
+            key={id}
+            to={
+              isThematic(data)
+                  ? `/users/${Coopernet.user.id}/thematics/${data.id}`
+                  : `/users/${id}/thematics`
+            }
+            state={{
+              thematicName: isThematic(data) ? name : null,
+              userName: isThematic(data) ? Coopernet.user.name : name,
+            }}
+            onClick={hideSideBar}
         >
           {name}
         </Link>
         <div className="flex items-center gap-1">
           {isThematic(data) ? (
-            <ActionButtonGroup
-              data={data}
-              showForm={{ value: showForm, toggle: toggleShowForm }}
-              hideSideBar={hideSideBar}
+              <ActionButtonGroup
+                  data={data}
+                  showForm={{value: showForm, toggle: toggleShowForm}}
+                  hideSideBar={hideSideBar}
             />
           ) : null}
           {isThematic(data) && data.children ? (

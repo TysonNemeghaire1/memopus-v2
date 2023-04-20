@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Thematic, { isThematic } from "../../../interfaces/Thematic";
+import React, {useState} from "react";
+import Thematic, {isThematic} from "../../../interfaces/Thematic";
 import User from "../../../interfaces/User";
 import Button from "./Button";
 
@@ -55,14 +55,14 @@ function List({ dataArray, display, hideSideBar }: Props) {
           </section>
         ) : null}
         <ul className={`flex flex-col pt-2`}>
-          {dataArray.flatMap((data) => {
+          {dataArray.length && dataArray.flatMap((data) => {
             const id = isThematic(data) ? data.id : data.uid;
             const name = isThematic(data) ? data.name : data.uname;
             if (
-              filter.length < 2 ||
-              name.toUpperCase().includes(filter.toUpperCase())
+                filter.length < 2 ||
+                name.toUpperCase().includes(filter.toUpperCase())
             ) {
-              return <Button key={id} data={data} hideSideBar={hideSideBar} />;
+              return <Button key={id} data={data} hideSideBar={hideSideBar}/>;
             }
             return [];
           })}

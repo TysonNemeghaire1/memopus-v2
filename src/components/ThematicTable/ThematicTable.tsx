@@ -98,6 +98,7 @@ function ThematicTable({ numberOfTermInColumn }: Props) {
                   to={`/users/${
                       params.userId ? params.userId : Coopernet.user.id
                   }/thematics/${data.card_theme_id}`}
+                  state={{thematicName: transformText(data.name)}}
                   className="block h-full w-full"
               >
                 {transformText(data.name)}{" "}
@@ -108,6 +109,7 @@ function ThematicTable({ numberOfTermInColumn }: Props) {
                   to={`/users/${
                       params.userId ? params.userId : Coopernet.user.id
                   }/thematics/${data.card_theme_id}`}
+                  state={{thematicName: transformText(data.name)}}
                   className="block h-full w-full"
               >
                 {data.cols["17"]}
@@ -118,6 +120,7 @@ function ThematicTable({ numberOfTermInColumn }: Props) {
                   to={`/users/${
                       params.userId ? params.userId : Coopernet.user.id
                   }/thematics/${data.card_theme_id}`}
+                  state={{thematicName: transformText(data.name)}}
                   className="block h-full w-full"
               >
                 {data.cols["18"]}
@@ -128,6 +131,7 @@ function ThematicTable({ numberOfTermInColumn }: Props) {
                   to={`/users/${
                       params.userId ? params.userId : Coopernet.user.id
                   }/thematics/${data.card_theme_id}`}
+                  state={{thematicName: transformText(data.name)}}
                   className="block h-full w-full"
               >
                 {data.cols["19"]}
@@ -138,6 +142,7 @@ function ThematicTable({ numberOfTermInColumn }: Props) {
                   to={`/users/${
                       params.userId ? params.userId : Coopernet.user.id
                   }/thematics/${data.card_theme_id}`}
+                  state={{thematicName: transformText(data.name)}}
                   className="block h-full w-full"
               >
                 {data.cols["20"]}
