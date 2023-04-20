@@ -19,6 +19,7 @@ import {
 import { loader as loginLoader } from "../routes/login";
 import { loader as columnLoader } from "../routes/columns";
 import { loader as dashboardLoader } from "../routes/dashboard";
+import ThematicColumns from "../pages/ThematicColumns";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,7 +47,7 @@ const router = createBrowserRouter(
         />
         <Route
           path={`/users/:userId/thematics/:thematicId`}
-          element={<Column />}
+          element={<ThematicColumns />}
           loader={columnLoader}
         />
       </Route>
