@@ -11,7 +11,6 @@ interface Props {
 
 function DataList({ datas, filter }: Props) {
   return (
-    <section className="flex w-full flex-wrap gap-3">
       <ul className="grid w-full grid-cols-1 gap-1 bg-gray-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {datas.flatMap((data) => {
           const id = isThematic(data) ? data.id : data.uid;
@@ -38,7 +37,6 @@ function DataList({ datas, filter }: Props) {
           return [];
         })}
       </ul>
-    </section>
   );
 }
 
