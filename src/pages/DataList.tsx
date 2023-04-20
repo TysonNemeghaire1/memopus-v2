@@ -4,6 +4,7 @@ import Thematic from "../interfaces/Thematic";
 import { useLoaderData, useLocation } from "react-router-dom";
 import User from "../interfaces/User";
 import DataListComponent from "../components/DataList/DataList";
+import Container from "../layout/Containers/Container";
 
 interface Props {
   title: string;
@@ -14,10 +15,10 @@ function DataList({ title }: Props) {
   const [filter, setFilter] = useState("");
   const { state } = useLocation();
   return (
-    <CardContainer>
-      <div className="bg-white px-5 py-5 shadow-lg space-y-6">
+    <Container>
+      <CardContainer>
         <h1 className="pt-6 text-xl font-extrabold text-blue-800 xl:text-2xl">
-          {title} {state && `de ${state}`}
+          {title} {state ? `de ${state}` : null}
         </h1>
         <section className="flex flex-col gap-1">
           <label className="text-blue-800" htmlFor="thematicFilter">
@@ -34,8 +35,8 @@ function DataList({ title }: Props) {
           />
         </section>
         <DataListComponent datas={datas} filter={filter} />
-      </div>
-    </CardContainer>
+      </CardContainer>
+    </Container>
   );
 }
 

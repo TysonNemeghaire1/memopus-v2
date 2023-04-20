@@ -21,7 +21,7 @@ export default function Container({ dataArray, title, hideSideBar }: Props) {
       <div className="mb-2 flex items-center justify-between">
         <p className="text-lg font-bold text-blue-600">{title}</p>
         <div className="flex items-center gap-2">
-          {isThematic(dataArray[0]) && (
+          {isThematic(dataArray[0]) ? (
             <button
               title={
                 showForm
@@ -37,7 +37,7 @@ export default function Container({ dataArray, title, hideSideBar }: Props) {
                 <IoAddCircle className="text-2xl" />
               )}
             </button>
-          )}
+          ) : null}
           <button
             onClick={() => setShowList(!showList)}
             className={`text-blue-800 h-fit transition duration-500 hover:bg-blue-800 hover:text-white p-1 rounded-full ${
@@ -48,7 +48,9 @@ export default function Container({ dataArray, title, hideSideBar }: Props) {
           </button>
         </div>
       </div>
-      {isThematic(dataArray[0]) && showForm && <InlineAddThematic key={"0"} />}
+      {isThematic(dataArray[0]) && showForm ? (
+        <InlineAddThematic key={"0"} />
+      ) : null}
       {
         <List
           dataArray={dataArray}

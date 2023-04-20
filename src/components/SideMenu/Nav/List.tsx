@@ -14,16 +14,16 @@ function List({ dataArray, display, hideSideBar }: Props) {
 
   return (
     <div
-      className={`overflow-y-scroll transition-all ease-in-out duration-500 ease-in-out ${
+      className={`overflow-y-scroll transition-all ease-in-out duration-500 ${
         display.showList ? "max-h-80" : "max-h-0"
       }`}
     >
       <div
         className={`transition duration-700 text-blue-800 ${
-          !display.showList && "-translate-y-full"
+          !display.showList ? "-translate-y-full" : null
         }`}
       >
-        {!display.hideFilter && dataArray.length > 6 && (
+        {!display.hideFilter && dataArray.length > 6 ? (
           <section className="mt-2 flex items-center gap-2 px-2.5">
             <label
               className="font-semibold"
@@ -53,7 +53,7 @@ function List({ dataArray, display, hideSideBar }: Props) {
               onChange={(event) => setFilter(event.target.value)}
             />
           </section>
-        )}
+        ) : null}
         <ul className={`flex flex-col pt-2`}>
           {dataArray.flatMap((data) => {
             const id = isThematic(data) ? data.id : data.uid;

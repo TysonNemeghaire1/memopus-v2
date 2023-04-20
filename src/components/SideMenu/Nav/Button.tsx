@@ -41,14 +41,14 @@ export default function Button({ data, hideSideBar }: Props) {
           {name}
         </Link>
         <div className="flex items-center gap-1">
-          {isThematic(data) && (
+          {isThematic(data) ? (
             <ActionButtonGroup
-              thematic={data}
+              data={data}
               showForm={{ value: showForm, toggle: toggleShowForm }}
               hideSideBar={hideSideBar}
             />
-          )}
-          {isThematic(data) && data.children && (
+          ) : null}
+          {isThematic(data) && data.children ? (
             <button
               onClick={() => setShowList(!showList)}
               className={`text-blue-800 h-fit transition duration-500 p-1 hover:bg-blue-800 hover:text-white rounded-full ${
@@ -57,19 +57,19 @@ export default function Button({ data, hideSideBar }: Props) {
             >
               <FaChevronDown />
             </button>
-          )}
+          ) : null}
         </div>
       </section>
-      {isThematic(data) && showForm && (
+      {isThematic(data) && showForm ? (
         <InlineAddThematic key={data.id} pid={data.id} />
-      )}
-      {isThematic(data) && data.children && (
+      ) : null}
+      {isThematic(data) && data.children ? (
         <List
           dataArray={data.children}
           display={{ showList }}
           hideSideBar={hideSideBar}
         />
-      )}
+      ) : null}
     </li>
   );
 }

@@ -36,7 +36,7 @@ function SideMenu({ thematics }: PropsInterface) {
   return (
     <aside
       className={`max-h-full w-full xl:max-w-max ${
-        showSideBar && isSmall && "fixed h-full w-full bg-white"
+        showSideBar && isSmall ? "fixed h-full w-full bg-white" : null
       }`}
     >
       <section className={`flex items-center justify-between p-5`}>
@@ -137,7 +137,7 @@ function SideMenu({ thematics }: PropsInterface) {
                   ? "Chargement..."
                   : "Charger les utilisateurs"}
               </button>
-              {fetcher.state === "loading" && (
+              {fetcher.state === "loading" ? (
                 <svg
                   aria-hidden="true"
                   className="mr-2 inline h-4 w-4 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
@@ -154,7 +154,7 @@ function SideMenu({ thematics }: PropsInterface) {
                     fill="currentFill"
                   />
                 </svg>
-              )}
+              ) : null}
             </fetcher.Form>
           )}
         </nav>

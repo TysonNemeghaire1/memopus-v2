@@ -113,11 +113,11 @@ export default function Login() {
                 onChange={onChangeHandler}
                 onBlur={onBlurHandler}
               />
-              {!inputs.name.isValid && (
+              {!inputs.name.isValid ? (
                 <span className="text-red-500">
                   Le nom d'utilisateur est requis.
                 </span>
-              )}
+              ) : null}
             </p>
             <p className="flex flex-col pt-5 gap-2.5">
               <label htmlFor="name">
@@ -141,11 +141,11 @@ export default function Login() {
                 onChange={onChangeHandler}
                 onBlur={onBlurHandler}
               />
-              {!inputs.password.isValid && (
+              {!inputs.password.isValid ? (
                 <span className="text-red-500">
                   Le mot de passe est requis.
                 </span>
-              )}
+              ) : null}
             </p>
             <p className="flex gap-2 pt-4">
               <input
@@ -164,7 +164,7 @@ export default function Login() {
                   className="mt-6 w-full rounded-lg bg-blue-800 text-white py-2.5 disabled:bg-blue-200"
                   type="submit"
                 >
-                  {isPending && (
+                  {isPending ? (
                     <svg
                       aria-hidden="true"
                       className="mr-2 inline h-4 w-4 animate-spin fill-blue-600 text-gray-200"
@@ -181,16 +181,16 @@ export default function Login() {
                         fill="currentFill"
                       />
                     </svg>
-                  )}
+                  ) : null}
                   {isPending ? "Connexion..." : "Se connecter"}
                 </button>
               </p>
             </section>
-            {error && (
+            {error ? (
               <section>
                 <p className="pt-2 text-red-500">{error}</p>
               </section>
-            )}
+            ) : null}
           </form>
         </section>
       </main>

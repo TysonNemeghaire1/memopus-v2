@@ -13,7 +13,7 @@ function InlineAddThematic({ pid }: Props) {
       method="post"
       className="flex gap-1 py-1.5"
     >
-      {pid && <input type="hidden" value={pid} name="pid" />}
+      {pid ? <input type="hidden" value={pid} name="pid" /> : null}
       <input
         name="name"
         placeholder="Nom du terme"
