@@ -32,7 +32,7 @@ export default function Button({ data, hideSideBar }: Props) {
           key={id}
           to={
             isThematic(data)
-              ? `/users/${Coopernet.user.id}/thematics`
+              ? `/users/${Coopernet.user.id}/thematics/${data.id}`
               : `/users/${id}/thematics`
           }
           state={isThematic(data) ? Coopernet.user.name : name}
@@ -51,7 +51,7 @@ export default function Button({ data, hideSideBar }: Props) {
           {isThematic(data) && data.children ? (
             <button
               onClick={() => setShowList(!showList)}
-              className={`text-blue-800 h-fit transition duration-500 p-1 hover:bg-blue-800 hover:text-white rounded-full ${
+              className={`text-blue-800 h-fit transition duration-300 p-1 hover:bg-blue-800 hover:text-white rounded-full ${
                 showList ? "rotate-180 " : ""
               }`}
             >
