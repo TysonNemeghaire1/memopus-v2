@@ -5,10 +5,10 @@ import {useParams} from "react-router-dom";
 import Coopernet from "../../services/Coopernet";
 
 const headerColor = [
-  "bg-red-600",
-  "bg-orange-600",
-  "bg-yellow-600",
-  "bg-lime-600",
+    "bg-red-600",
+    "bg-orange-600",
+    "bg-yellow-600",
+    "bg-lime-600",
 ];
 
 const headerButtonHoverColor = [
@@ -26,27 +26,27 @@ interface Props {
 function Column({ data, index }: Props) {
   const params = useParams();
   return (
-    <div className="max-h-full snap-center space-y-6">
-        <p
-            className={`flex justify-between h-fit text-white text-xl px-5 py-3 ${
-                headerColor[index % 4]
-            }`}
-        >
-            {data.name}
-            {params.userId === Coopernet.user.id ? (
-                <button
-                    className={`font-bold px-1.5 rounded-full h-fit text-center ${
-                        headerButtonHoverColor[index % 4]
-            }`}
+      <div className="max-h-full snap-center space-y-6">
+          <p
+              className={`flex justify-between h-fit text-white text-xl px-5 py-3 ${
+                  headerColor[index % 4]
+              }`}
           >
-            +
-          </button>
-        ) : null}
-      </p>
-      <section className="flex flex-col gap-4">
-        {data.cards.map((card) => (
-          <Card key={card.id} card={card} />
-        ))}
+              {data.name}
+              {params.userId === Coopernet.user.id ? (
+                  <button
+                      className={`font-bold px-1.5 rounded-full h-fit text-center ${
+                          headerButtonHoverColor[index % 4]
+                      }`}
+                  >
+                      +
+                  </button>
+              ) : null}
+          </p>
+          <section className="flex flex-col gap-4">
+              {data.cards.map((card) => (
+                  <Card key={card.id} card={card}/>
+              ))}
       </section>
     </div>
   );

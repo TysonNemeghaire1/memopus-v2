@@ -12,7 +12,7 @@ export function Card({ card }: { card: CardInterface }) {
     <section className="flex flex-col gap-2 bg-white p-6 shadow-md">
       {params.userId === Coopernet.user.id ? (
         <div className="flex justify-end">
-          <ActionButtonGroup data={card}/>
+            <ActionButtonGroup data={card}/>
         </div>
       ) : null}
       <p>{card.question}</p>

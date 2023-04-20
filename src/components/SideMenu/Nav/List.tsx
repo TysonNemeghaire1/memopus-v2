@@ -13,13 +13,13 @@ function List({dataArray, display, hideSideBar}: Props) {
   const [filter, setFilter] = useState("");
 
   return (
-    <div
-      className={`overflow-y-scroll transition-all ease-in-out duration-300 ${
-        display.showList ? "max-h-80" : "max-h-0"
-      }`}
-    >
       <div
-        className={`transition duration-500 text-blue-800 ${
+          className={`overflow-y-scroll transition-all ease-in-out duration-300 ${
+              display.showList ? "max-h-80" : "max-h-0"
+          }`}
+      >
+        <div
+            className={`transition duration-500 text-blue-800 ${
           !display.showList ? "-translate-y-full" : null
         }`}
       >

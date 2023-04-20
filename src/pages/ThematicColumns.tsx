@@ -20,7 +20,7 @@ function ThematicColumns() {
                 ))}
             </div>
         </Container>
-  );
+    );
 }
 
 export default ThematicColumns;
