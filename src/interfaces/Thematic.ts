@@ -9,5 +9,5 @@ export default interface Thematic {
 }
 
 export const isThematic = (data: Thematic | User | Card): data is Thematic => {
-  return "children" in data;
+  return "pid" in data;
 };
