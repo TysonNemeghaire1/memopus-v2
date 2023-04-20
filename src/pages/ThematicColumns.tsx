@@ -11,7 +11,7 @@ function ThematicColumns() {
         <h1 className="text-xl font-extrabold text-blue-800 xl:text-2xl">
           Tableau de {/*TODO Ajouter le thème*/}{" "}
         </h1>
-        <div className="grid grid-cols-[repeat(4,100%)] md:grid-cols-[repeat(4,calc(50%-0.75rem))] lg:grid-cols-[repeat(4,calc(33%-12px)] 2xl:grid-cols-4 gap-3 overflow-x-auto">
+        <div className="grid grid-cols-[repeat(4,100%)] md:grid-cols-[repeat(4,calc(50%-0.75rem))] lg:grid-cols-[repeat(4,calc(33%-12px)] 2xl:grid-cols-4 gap-3 overflow-x-auto snap-x">
           {columns.map((column, index) => (
             <Column key={column.id} data={column} index={index} />
           ))}

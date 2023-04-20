@@ -25,9 +25,8 @@ interface Props {
 
 function Column({ data, index }: Props) {
   const params = useParams();
-  console.log(params);
   return (
-    <div className="max-h-full space-y-6">
+    <div className="max-h-full space-y-6 snap-center">
       <p
         className={`flex justify-between h-fit text-white text-xl px-5 py-3 ${
           headerColor[index % 4]
