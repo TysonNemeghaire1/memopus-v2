@@ -40,7 +40,7 @@ export default function Container({ dataArray, title, hideSideBar }: Props) {
           ) : null}
           <button
             onClick={() => setShowList(!showList)}
-            className={`text-blue-800 h-fit transition duration-500 hover:bg-blue-800 hover:text-white p-1 rounded-full ${
+            className={`text-blue-800 h-fit transition duration-300 hover:bg-blue-800 hover:text-white p-1 rounded-full ${
               showList ? "rotate-180 " : ""
             }`}
           >

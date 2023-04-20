@@ -14,12 +14,12 @@ function List({ dataArray, display, hideSideBar }: Props) {
 
   return (
     <div
-      className={`overflow-y-scroll transition-all ease-in-out duration-500 ${
+      className={`overflow-y-scroll transition-all ease-in-out duration-300 ${
         display.showList ? "max-h-80" : "max-h-0"
       }`}
     >
       <div
-        className={`transition duration-700 text-blue-800 ${
+        className={`transition duration-500 text-blue-800 ${
           !display.showList ? "-translate-y-full" : null
         }`}
       >

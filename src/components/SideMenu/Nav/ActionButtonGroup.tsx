@@ -27,7 +27,7 @@ function ActionButtonGroup({ data, showForm, hideSideBar }: Props) {
       <div
         className={`inline-flex items-center ${
           showGroupButton ? "max-w-2xl" : "max-w-0"
-        } overflow-hidden transition-all duration-500`}
+        } overflow-hidden transition-all duration-300`}
       >
         {isThematic(data) ? (
           <button
