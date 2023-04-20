@@ -49,7 +49,7 @@ export default function Button({ data, hideSideBar }: Props) {
                   data={data}
                   showForm={{value: showForm, toggle: toggleShowForm}}
                   hideSideBar={hideSideBar}
-            />
+              />
           ) : null}
           {isThematic(data) && data.children ? (
             <button

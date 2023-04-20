@@ -1,8 +1,9 @@
 import ActionButtonGroup from "../SideMenu/Nav/ActionButtonGroup";
 import Coopernet from "../../services/Coopernet";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import CardInterface from "../../interfaces/Card";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
+
 export function Card({ card }: { card: CardInterface }) {
   const [showDetails, setShowDetails] = useState(false);
   const params = useParams();
@@ -11,9 +12,7 @@ export function Card({ card }: { card: CardInterface }) {
     <section className="flex flex-col gap-2 bg-white p-6 shadow-md">
       {params.userId === Coopernet.user.id ? (
         <div className="flex justify-end">
-          <ActionButtonGroup
-            data={card}
-          />
+          <ActionButtonGroup data={card}/>
         </div>
       ) : null}
       <p>{card.question}</p>

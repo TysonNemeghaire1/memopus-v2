@@ -29,9 +29,9 @@ function DataList({ title }: Props) {
               name="thematicFilter"
               id="thematicFilter"
               placeholder="Taper votre recherche"
-            className="w-fit rounded-lg ring-1 ring-blue-600 p-1.5"
-            value={filter}
-            onChange={(event) => setFilter(event.target.value)}
+              className="w-fit rounded-lg ring-1 ring-blue-600 p-1.5"
+              value={filter}
+              onChange={(event) => setFilter(event.target.value)}
           />
         </section>
         <DataListComponent datas={datas} filter={filter} />

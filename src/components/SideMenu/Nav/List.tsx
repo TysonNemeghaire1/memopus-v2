@@ -9,7 +9,7 @@ interface Props {
   hideSideBar: () => void;
 }
 
-function List({ dataArray, display, hideSideBar }: Props) {
+function List({dataArray, display, hideSideBar}: Props) {
   const [filter, setFilter] = useState("");
 
   return (
@@ -55,17 +55,20 @@ function List({ dataArray, display, hideSideBar }: Props) {
           </section>
         ) : null}
         <ul className={`flex flex-col pt-2`}>
-          {dataArray.length && dataArray.flatMap((data) => {
-            const id = isThematic(data) ? data.id : data.uid;
-            const name = isThematic(data) ? data.name : data.uname;
-            if (
-                filter.length < 2 ||
-                name.toUpperCase().includes(filter.toUpperCase())
-            ) {
-              return <Button key={id} data={data} hideSideBar={hideSideBar}/>;
-            }
-            return [];
-          })}
+          {dataArray.length &&
+              dataArray.flatMap((data) => {
+                const id = isThematic(data) ? data.id : data.uid;
+                const name = isThematic(data) ? data.name : data.uname;
+                if (
+                    filter.length < 2 ||
+                    name.toUpperCase().includes(filter.toUpperCase())
+                ) {
+                  return (
+                      <Button key={id} data={data} hideSideBar={hideSideBar}/>
+                  );
+                }
+                return [];
+              })}
         </ul>
       </div>
     </div>

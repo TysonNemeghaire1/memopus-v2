@@ -8,7 +8,7 @@ interface Props {
   filter: string;
 }
 
-function DataList({ datas, filter }: Props) {
+function DataList({datas, filter}: Props) {
   const {state} = useLocation();
   return (
       <ul className="grid w-full grid-cols-1 gap-1 bg-gray-50 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -24,7 +24,7 @@ function DataList({ datas, filter }: Props) {
                     <li
                         key={id}
                         className="rounded border border-blue-100 text-center hover:border-blue-600 hover:bg-blue-50"
-              >
+                    >
                       <Link
                           className="block w-full px-8 py-2"
                           to={isThematic(data) ? id : `${id}/thematics`}
@@ -41,7 +41,7 @@ function DataList({ datas, filter }: Props) {
               return [];
             })
         ) : (
-            <p className="text-lg p-3">Cette personne n'a aucune thématique</p>
+            <p className="p-3 text-lg">Cette personne n'a aucune thématique</p>
         )}
       </ul>
   );

@@ -10,7 +10,7 @@ interface Props {
   numberOfTermInColumn: NumberOfTermInColumn[];
 }
 
-function ThematicTable({ numberOfTermInColumn }: Props) {
+function ThematicTable({numberOfTermInColumn}: Props) {
   const isSmallScreen = useSmallScreen();
   const params = useParams();
   const sortByName = () => {
