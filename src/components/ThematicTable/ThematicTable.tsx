@@ -1,9 +1,10 @@
 import React from "react";
 import NumberOfTermInColumn from "../../interfaces/NumberOfTermInColumn";
 import ColumnIndex from "../../interfaces/ColumnIndex";
-import { AiOutlineArrowDown } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { useSmallScreen } from "../../hooks/useSmallScreen";
+import {AiOutlineArrowDown} from "react-icons/ai";
+import {Link, useParams} from "react-router-dom";
+import {useSmallScreen} from "../../hooks/useSmallScreen";
+import Coopernet from "../../services/Coopernet";
 
 interface Props {
   numberOfTermInColumn: NumberOfTermInColumn[];
@@ -11,6 +12,7 @@ interface Props {
 
 function ThematicTable({ numberOfTermInColumn }: Props) {
   const isSmallScreen = useSmallScreen();
+  const params = useParams();
   const sortByName = () => {
     numberOfTermInColumn.sort((firstTerm, secondTerm) => {
       const firstTermName = firstTerm.name.toUpperCase();
@@ -93,40 +95,50 @@ function ThematicTable({ numberOfTermInColumn }: Props) {
               }`}
             >
               <Link
-                to={`/thematic/${data.card_theme_id}`}
-                className="block h-full w-full"
+                  to={`/users/${
+                      params.userId ? params.userId : Coopernet.user.id
+                  }/thematics/${data.card_theme_id}`}
+                  className="block h-full w-full"
               >
                 {transformText(data.name)}{" "}
               </Link>
             </td>
             <td>
               <Link
-                to={`/thematic/${data.card_theme_id}`}
-                className="block h-full w-full"
+                  to={`/users/${
+                      params.userId ? params.userId : Coopernet.user.id
+                  }/thematics/${data.card_theme_id}`}
+                  className="block h-full w-full"
               >
                 {data.cols["17"]}
               </Link>
             </td>
             <td>
               <Link
-                to={`/thematic/${data.card_theme_id}`}
-                className="block h-full w-full"
+                  to={`/users/${
+                      params.userId ? params.userId : Coopernet.user.id
+                  }/thematics/${data.card_theme_id}`}
+                  className="block h-full w-full"
               >
                 {data.cols["18"]}
               </Link>
             </td>
             <td>
               <Link
-                to={`/thematic/${data.card_theme_id}`}
-                className="block h-full w-full"
+                  to={`/users/${
+                      params.userId ? params.userId : Coopernet.user.id
+                  }/thematics/${data.card_theme_id}`}
+                  className="block h-full w-full"
               >
                 {data.cols["19"]}
               </Link>
             </td>
             <td>
               <Link
-                to={`/thematic/${data.card_theme_id}`}
-                className="block h-full w-full"
+                  to={`/users/${
+                      params.userId ? params.userId : Coopernet.user.id
+                  }/thematics/${data.card_theme_id}`}
+                  className="block h-full w-full"
               >
                 {data.cols["20"]}
               </Link>
