@@ -9,7 +9,6 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import DataList from "../pages/DataList";
 import ThematicForm from "../pages/ThematicForm";
-import Column from "../components/Column/Column";
 import { loader as userLoader } from "../routes/users";
 import {
   action as thematicAction,
