@@ -1,7 +1,7 @@
 import React from "react";
 import ColumnInteface from "../../interfaces/Column";
-import { Card } from "./Card";
-import { useParams } from "react-router-dom";
+import {Card} from "./Card";
+import {useParams} from "react-router-dom";
 import Coopernet from "../../services/Coopernet";
 
 const headerColor = [
@@ -26,17 +26,17 @@ interface Props {
 function Column({ data, index }: Props) {
   const params = useParams();
   return (
-    <div className="max-h-full space-y-6 snap-center">
-      <p
-        className={`flex justify-between h-fit text-white text-xl px-5 py-3 ${
-          headerColor[index % 4]
-        }`}
-      >
-        {data.name}
-        {params.userId === Coopernet.user.id ? (
-          <button
-            className={`font-bold px-1.5 rounded-full h-fit text-center ${
-              headerButtonHoverColor[index % 4]
+    <div className="max-h-full snap-center space-y-6">
+        <p
+            className={`flex justify-between h-fit text-white text-xl px-5 py-3 ${
+                headerColor[index % 4]
+            }`}
+        >
+            {data.name}
+            {params.userId === Coopernet.user.id ? (
+                <button
+                    className={`font-bold px-1.5 rounded-full h-fit text-center ${
+                        headerButtonHoverColor[index % 4]
             }`}
           >
             +

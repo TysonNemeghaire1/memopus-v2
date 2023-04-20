@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, useLoaderData } from "react-router-dom";
+import {Outlet, useLoaderData} from "react-router-dom";
 import SideMenu from "../components/SideMenu/SideMenu";
 import Thematic from "../interfaces/Thematic";
 
@@ -12,9 +12,9 @@ const Layout = () => {
   return (
     <>
       <div className="flex min-h-screen flex-col xl:flex-row">
-        <SideMenu thematics={thematics} />
-        <main className="w-full max-h-full bg-gray-50">
-          <Outlet />
+        <SideMenu thematics={thematics}/>
+        <main className="max-h-full w-full bg-gray-50">
+          <Outlet/>
         </main>
       </div>
     </>
