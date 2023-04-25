@@ -15,6 +15,7 @@ import {
   flatArrayLoader,
   loader as thematicLoader,
 } from "../routes/thematics";
+import { action as cardAction } from "../routes/cards";
 import { loader as loginLoader } from "../routes/login";
 import { loader as columnLoader } from "../routes/columns";
 import { loader as dashboardLoader } from "../routes/dashboard";
@@ -33,6 +34,9 @@ const router = createBrowserRouter(
               loader={flatArrayLoader}
             />
           </Route>
+        </Route>
+        <Route path="/cards" action={cardAction}>
+          <Route path=":cardId" action={cardAction} />
         </Route>
         <Route
           path="/users"

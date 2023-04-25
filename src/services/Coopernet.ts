@@ -125,7 +125,7 @@ class Coopernet {
 
   //endregion
 
-  //#region TABLEAU ACCUEIL
+  //#region TABLEAU DASHBOARD
 
   static fetchTermsAndColumns = async (user_id?: string) => {
     await Coopernet.setOAuthToken();
@@ -252,6 +252,8 @@ class Coopernet {
 
   //#endregion
 
+  //region COLUMNS & CARDS
+
   static getCards = async (thematicId: string, userId = Coopernet.user.id) => {
     await Coopernet.setOAuthToken();
     const response = await fetch(
@@ -270,6 +272,97 @@ class Coopernet {
         "Problème lors de la récupération des cartes :  " + response.status
       );
   };
+
+  static deleteCard = async (cardId: string) => {
+    await Coopernet.setOAuthToken();
+    const response = await fetch(`${Coopernet.url}api/card/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${this.oAuthToken.token_type} ${this.oAuthToken.access_token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("La carte n'a pas été supprimée");
+    }
+  };
+
+  //endregion
+
+  //#region CARD IMAGE
+
+  /*static addImageToCard = async (card_uuid, image_uuid, inputType) => {
+    console.debug('Dans addImageToCard', image_uuid)
+    await Coopernet.setOAuthToken();
+
+    const response = fetch(`${Coopernet.url}jsonapi/node/carte/${card_uuid}/relationships/field_card_${inputType}_picture`, {
+      method: 'PATCH', headers: {
+        'Content-Type': 'application/vnd.api+json',
+        'Accept': 'application/vnd.api+json',
+        "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
+      }, body: JSON.stringify({
+        "data": {
+          "type": "file--file",
+          "id": image_uuid
+        }
+      })
+    })
+    console.log((await response).status);
+  }
+  static deleteImageFromCard = async (card_uuid: string, inputType: string) => {
+    console.debug('Dans addImageToCard')
+    await Coopernet.setOAuthToken();
+
+    const response = fetch(`${Coopernet.url}jsonapi/node/carte/${card_uuid}/relationships/field_card_${inputType}_picture`, {
+      method: 'PATCH', headers: {
+        'Content-Type': 'application/vnd.api+json',
+        'Accept': 'application/vnd.api+json',
+        "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
+      }, body: JSON.stringify({
+        "data": null
+      })
+    })
+    console.log((await response).status);
+  }
+
+  static postImage = async (image, inputField) => {
+    console.debug('Dans postImage')
+    await Coopernet.setOAuthToken();
+
+    const infoImage = Coopernet.getFile(image.url);
+    const response = await fetch(`${Coopernet.url}jsonapi/node/carte/field_card_${inputField}_picture`,
+        {
+          method: "POST", headers: {
+            "Content-Type": 'application/octet-stream',
+            "Accept": "application/vnd.api+json",
+            "Content-Disposition": `file; filename="${Math.random().toString(36).replace(/[^a-z]+/g, '')}.${infoImage[1]}"`,
+            "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
+          }, body: image.data.files[0]
+        })
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.debug('Fichier non envoyé', response.status);
+    }
+  }
+  static getFile = (imageUrl) => {
+    console.debug('imageURL', imageUrl)
+    const path = imageUrl.split('\\');
+    const finalPath = path[path.length - 1];
+    return finalPath.split('.');
+  }*/
+
+  /* /!**
+   * Fonction servant à trouver une photo via son id
+   * @param id id de l'image à trouver.
+   * @returns {Promise<any>}
+   *!/
+  static findImage = async (id) => {
+    const response = await fetch(`${Coopernet.url_server}jsonapi/file/file?filter[drupal_internal__fid]=${id}`)
+    return await response.json();
+  }*/
+
+  //#endregion
 
   static getUsers = async (): Promise<User[]> => {
     await Coopernet.setOAuthToken();

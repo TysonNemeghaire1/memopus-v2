@@ -54,9 +54,9 @@ function ActionButtonGroup({ data, showForm, hideSideBar }: Props) {
         </Link>
 
         {(isThematic(data) && !data.children) || !isThematic(data) ? (
-          <fetcher.Form action={`/thematics/${data.id}`} method="delete">
+          <fetcher.Form action={isThematic(data) ? `/thematics/${data.id}` : `/cards/${data.id}`} method="delete">
             <button
-              title="Supprimer la thématique"
+              title={isThematic(data) ? "Supprimer la thématique" : "Supprimer la carte"}
               name="action"
               value="delete"
               className="rounded p-1 text-red-600 hover:bg-red-200"
