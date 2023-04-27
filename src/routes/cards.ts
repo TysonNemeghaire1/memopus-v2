@@ -1,7 +1,6 @@
 import Coopernet from "../services/Coopernet";
-import {
-  ActionFunctionArgs,
-} from "react-router-dom";
+import { ActionFunctionArgs } from "react-router-dom";
+import Card from "../interfaces/Card";
 
 export async function action({ request, params }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -14,14 +13,24 @@ export async function action({ request, params }: ActionFunctionArgs) {
     return null;
   }
 
-  /*const label = formData.get("name") as string;
-  const pid = formData.get("pid") as string;
+  const question = formData.get("question") as string;
+  const questionPicture = formData.get("questionPicture");
+  const answer = formData.get("answer") as string;
+  const explanation = formData.get("explanation") as string;
+  const columnId = formData.get("columnId") as string;
+  const themacicId = formData.get("thematicId") as string;
+
+  console.log(typeof questionPicture)
+
+  const newCard = {question, answer, explanation, column : columnId} as Card;
 
   if (action === "add") {
-    return await Coopernet.addOrEditThematic(label, pid ? pid : undefined);
+    await Coopernet.addCard(newCard, themacicId);
+    return null;
   }
 
-  if (action === "edit") {
+
+  /*if (action === "edit") {
     return await Coopernet.addOrEditThematic(
       label,
       pid ? parseInt(pid) : undefined,

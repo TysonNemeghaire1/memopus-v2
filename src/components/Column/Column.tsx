@@ -47,7 +47,7 @@ function Column({ data, index }: Props) {
           </button>
         ) : null}
       </p>
-      {isAddingCard ? <CardForm /> : null}
+      {isAddingCard ? <CardForm columnId={data.id}/> : null}
       <section className="flex flex-col gap-4">
         {data.cards.map((card) => (
           <Card key={card.id} card={card} />

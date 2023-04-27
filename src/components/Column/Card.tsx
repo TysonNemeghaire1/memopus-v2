@@ -44,7 +44,7 @@ export function Card({ card }: { card: CardInterface }) {
           <p>Explication :</p>
         ) : null}
         {card.explanation ? (
-          <p className="bg-gray-50 py-2 px-1.5">{card.explanation}</p>
+          <p className="bg-gray-50 py-2 px-1.5" dangerouslySetInnerHTML={{__html: card.explanation}}/>
         ) : null}
         {card.explanation_picture.url ? (
           <img

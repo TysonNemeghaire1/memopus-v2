@@ -2,6 +2,7 @@ import NumberOfTermInColumn from "../interfaces/NumberOfTermInColumn";
 import columnIndexType from "../interfaces/ColumnIndex";
 import Thematic from "../interfaces/Thematic";
 import User from "../interfaces/User";
+import Card from "../interfaces/Card";
 
 interface oAuth {
   access_token: string;
@@ -287,6 +288,59 @@ class Coopernet {
     }
   };
 
+  static addCard = async (card: Card, thematicId: string) => {
+    await Coopernet.setOAuthToken();
+
+    /*
+        let question_file = null;
+        // S'il y a un id au champ card.question_picture, c'est qu'on copie une carte sinon s'il y a juste une url, on ajoute une photo
+        if (card?.question_picture?.id) question_file = await Coopernet.findImage(card.question_picture.id);
+        else if (card?.question_picture?.url) question_file = await Coopernet.postImage(card.question_picture, 'question');
+
+        let explanation_file = null;
+        if (card.explanation_picture?.id) explanation_file = await Coopernet.findImage(card.explanation_picture.id);
+        else if (card?.explanation_picture?.url) explanation_file = await Coopernet.postImage(card.explanation_picture, 'explanation');
+*/
+
+    const response = await fetch(`${Coopernet.url}api/add/card`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${Coopernet.oAuthToken.token_type} ${Coopernet.oAuthToken.access_token}`,
+      },
+      body: JSON.stringify({
+        title: card.question,
+        field_card_question: card.question,
+        field_card_answer: card.answer,
+        field_card_explanation: card.explanation,
+        field_card_column: card.column,
+        field_card_theme: thematicId,
+      }),
+    });
+
+    if (response.ok) {
+     // const data = await response.json();
+     /* if (question_file) {
+        // Les fonctions findImage et postImage renvoient 2 formats de données différents
+        const imageId = question_file.data?.id
+          ? question_file.data.id
+          : question_file.data[0].id;
+        await Coopernet.addImageToCard(data.uuid[0].value, imageId, "question");
+      }
+
+      if (explanation_file) {
+        const imageId = explanation_file.data?.id
+          ? explanation_file.data.id
+          : explanation_file.data[0].id;
+        await Coopernet.addImageToCard(
+          data.uuid[0].value,
+          imageId,
+          "explanation"
+        );
+      }*/
+    }
+  };
+
   //endregion
 
   //#region CARD IMAGE
@@ -354,7 +408,7 @@ class Coopernet {
 
   /* /!**
    * Fonction servant à trouver une photo via son id
-   * @param id id de l'image à trouver.
+   * @param id de l'image à trouver.
    * @returns {Promise<any>}
    *!/
   static findImage = async (id) => {
