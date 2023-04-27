@@ -18,14 +18,14 @@ export async function action({ request, params }: ActionFunctionArgs) {
   const answer = formData.get("answer") as string;
   const explanation = formData.get("explanation") as string;
   const columnId = formData.get("columnId") as string;
-  const themacicId = formData.get("thematicId") as string;
+  const thematicId = formData.get("thematicId") as string;
 
   console.log(typeof questionPicture)
 
   const newCard = {question, answer, explanation, column : columnId} as Card;
 
   if (action === "add") {
-    await Coopernet.addCard(newCard, themacicId);
+    await Coopernet.addCard(newCard, thematicId);
     return null;
   }
 
