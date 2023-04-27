@@ -53,25 +53,25 @@ function ThematicTable({numberOfTermInColumn}: Props) {
             </span>
           </th>
           <th scope="col" role="button" onClick={() => sortByCol(17)}>
-            <span className="flex items-center justify-center gap-1">
+            <span className="flex items-center justify-center text-red-600 gap-1">
               {isSmallScreen ? "Apprendre" : "À apprendre"}
               <AiOutlineArrowDown />
             </span>
           </th>
           <th scope="col" role="button" onClick={() => sortByCol(18)}>
-            <span className="flex items-center justify-center gap-1">
+            <span className="flex items-center justify-center text-orange-600 gap-1">
               {isSmallScreen ? "Peu" : "Je sais un peu"}
               <AiOutlineArrowDown />
             </span>
           </th>
           <th scope="col" role="button" onClick={() => sortByCol(19)}>
-            <span className="flex items-center justify-center gap-1">
+            <span className="flex items-center justify-center text-yellow-600 gap-1">
               {isSmallScreen ? "Bien" : "Je sais bien"}
               <AiOutlineArrowDown />
             </span>
           </th>
           <th scope="col" role="button" onClick={() => sortByCol(20)}>
-            <span className="flex items-center justify-center gap-1">
+            <span className="flex items-center justify-center text-green-600 gap-1">
               {isSmallScreen ? "Parfait" : "Je sais parfaitement"}
               <AiOutlineArrowDown />
             </span>
