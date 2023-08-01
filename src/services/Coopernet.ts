@@ -15,15 +15,20 @@ interface oAuth {
 class Coopernet {
   //region VARIABLES
 
+  // La base de l'url pour les endpoints
   static url =
     process.env.NODE_ENV === "production"
       ? "https://coopernet.fr/"
       : "http://local.coopernet.my/";
+
+  //Les données nécessaires sur l'utilisateur
   static user: { id: string; name: string; password: string } = {
     id: "",
     name: "",
     password: "",
   };
+
+  //Les données reçues par le token d'identification
   static oAuthToken: oAuth = {
     access_token: "",
     refresh_token: "",
@@ -36,11 +41,16 @@ class Coopernet {
   //region CONNEXION
 
   /**
+   * Cette fonction renvoi un FormData contenant toutes les informations pour créer un nouveau token d'identification
+   * On utilise le payload dans le body de la requête pour créer le nouveau token
    * @param {boolean} toRefresh
    * true si on veut rafraichir notre token /
    * false si on souhaite créer un token
+   * @return Promise<FormData>
    */
-  static getOauthPayload = async (toRefresh: boolean) => {
+  static getOauthPayload: (toRefresh: boolean) => Promise<FormData> = async (
+    toRefresh: boolean
+  ) => {
     const payload = new FormData();
 
     payload.append("client_id", await Coopernet.getClientID());
@@ -58,6 +68,11 @@ class Coopernet {
 
     return payload;
   };
+
+  /**
+   * Cette fonction permet de récupérer une donnée nécessaire au payload
+   * On l'utilise donc dans getOauthPayload
+   */
   static getClientID = async (): Promise<string> => {
     const response = await fetch(`${Coopernet.url}oauth/memo/clientId`);
     if (response.ok) return response.json();
@@ -90,6 +105,10 @@ class Coopernet {
       );
   };
 
+  /**
+   * Gère la demande de token d'authentification selon le besoin
+   * Je l'utilise avant chaque appel d'api pour être sûr que l'utilisateur est connecté
+   */
   static setOAuthToken = async () => {
     if (Coopernet.oAuthToken.access_token === "") {
       return Coopernet.fetchOauth(false); // Créer une demande de création du token
@@ -105,10 +124,11 @@ class Coopernet {
     return true; // Pas de demande
   };
 
+  /**
+   * Fonction à utiliser lors de la connexion via formulaire
+   */
   static login = async () => {
-    Coopernet.oAuthToken.refresh_token
-      ? await Coopernet.fetchOauth(true)
-      : await Coopernet.setOAuthToken();
+    await Coopernet.setOAuthToken();
     const response = await fetch(`${Coopernet.url}/memo/is_logged`, {
       method: "GET",
       headers: {
@@ -128,6 +148,10 @@ class Coopernet {
 
   //#region TABLEAU DASHBOARD
 
+  /**
+   * Récupère et renvoie le nombre de cartes de chaque colonne par thématique en donnée non formatée
+   * @param user_id
+   */
   static fetchTermsAndColumns = async (user_id?: string) => {
     await Coopernet.setOAuthToken();
     const response = await fetch(
@@ -144,6 +168,12 @@ class Coopernet {
       `Erreur HTTP lors de la récupération des termes et colonnes. Statut: ${response.status}`
     );
   };
+
+  /**
+   * Récupère et renvoie le nombre de cartes de chaque colonne par thématique en donnée formatée
+   * Cette fonction est à utiliser pour le tableau de la page d'accueil
+   * @param user_id
+   */
   static getTermsAndColumns = async (
     user_id?: string
   ): Promise<NumberOfTermInColumn[]> => {
@@ -182,6 +212,10 @@ class Coopernet {
 
   //#region TERMS ALIAS THEMATICS
 
+  /**
+   * Récupère les thèmes d'une personne
+   * @param userId id de l'utilisateur
+   */
   static getThematics = async (
     userId: string = Coopernet.user.id
   ): Promise<Thematic[]> => {
@@ -199,6 +233,10 @@ class Coopernet {
     throw new Error("Problème dans la récupération des thèmes");
   };
 
+  /**
+   * Supprime un thème
+   * @param id id du thème
+   */
   static deleteThematic = async (id: string) => {
     await Coopernet.setOAuthToken();
     const response = await fetch(`${Coopernet.url}api/term/${id}`, {
@@ -212,6 +250,12 @@ class Coopernet {
       throw new Error("Erreur lors de la suppression de la thématique");
   };
 
+  /**
+   * Ajoute ou modifie un thème
+   * @param label nom du thème
+   * @param ptid id du thème parent | undefined pour créer à la racine
+   * @param tid id du thème à modifier | undefined pour créer
+   */
   static addOrEditThematic = async (
     label: string,
     ptid: number | string = 0,
@@ -255,6 +299,11 @@ class Coopernet {
 
   //region COLUMNS & CARDS
 
+  /**
+   * Récupère les colonnes et les cartes d'un utilisateur
+   * @param thematicId
+   * @param userId
+   */
   static getCards = async (thematicId: string, userId = Coopernet.user.id) => {
     await Coopernet.setOAuthToken();
     const response = await fetch(
@@ -274,6 +323,10 @@ class Coopernet {
       );
   };
 
+  /**
+   * Supprime une carte
+   * @param cardId
+   */
   static deleteCard = async (cardId: string) => {
     await Coopernet.setOAuthToken();
     const response = await fetch(`${Coopernet.url}api/card/${cardId}`, {
@@ -288,19 +341,23 @@ class Coopernet {
     }
   };
 
+  /**
+   * Ajoute une carte
+   * La partie pour la photo n'est pas encore gérée
+   */
   static addCard = async (card: Card, thematicId: string) => {
     await Coopernet.setOAuthToken();
 
     /*
-        let question_file = null;
-        // S'il y a un id au champ card.question_picture, c'est qu'on copie une carte sinon s'il y a juste une url, on ajoute une photo
-        if (card?.question_picture?.id) question_file = await Coopernet.findImage(card.question_picture.id);
-        else if (card?.question_picture?.url) question_file = await Coopernet.postImage(card.question_picture, 'question');
-
-        let explanation_file = null;
-        if (card.explanation_picture?.id) explanation_file = await Coopernet.findImage(card.explanation_picture.id);
-        else if (card?.explanation_picture?.url) explanation_file = await Coopernet.postImage(card.explanation_picture, 'explanation');
-*/
+                let question_file = null;
+                // S'il y a un id au champ card.question_picture, c'est qu'on copie une carte sinon s'il y a juste une url, on ajoute une photo
+                if (card?.question_picture?.id) question_file = await Coopernet.findImage(card.question_picture.id);
+                else if (card?.question_picture?.url) question_file = await Coopernet.postImage(card.question_picture, 'question');
+        
+                let explanation_file = null;
+                if (card.explanation_picture?.id) explanation_file = await Coopernet.findImage(card.explanation_picture.id);
+                else if (card?.explanation_picture?.url) explanation_file = await Coopernet.postImage(card.explanation_picture, 'explanation');
+        */
 
     const response = await fetch(`${Coopernet.url}api/add/card`, {
       method: "POST",
@@ -319,105 +376,108 @@ class Coopernet {
     });
 
     if (response.ok) {
-     // const data = await response.json();
-     /* if (question_file) {
-        // Les fonctions findImage et postImage renvoient 2 formats de données différents
-        const imageId = question_file.data?.id
-          ? question_file.data.id
-          : question_file.data[0].id;
-        await Coopernet.addImageToCard(data.uuid[0].value, imageId, "question");
-      }
-
-      if (explanation_file) {
-        const imageId = explanation_file.data?.id
-          ? explanation_file.data.id
-          : explanation_file.data[0].id;
-        await Coopernet.addImageToCard(
-          data.uuid[0].value,
-          imageId,
-          "explanation"
-        );
-      }*/
+      // const data = await response.json();
+      /* if (question_file) {
+                    // Les fonctions findImage et postImage renvoient 2 formats de données différents
+                    const imageId = question_file.data?.id
+                      ? question_file.data.id
+                      : question_file.data[0].id;
+                    await Coopernet.addImageToCard(data.uuid[0].value, imageId, "question");
+                  }
+            
+                  if (explanation_file) {
+                    const imageId = explanation_file.data?.id
+                      ? explanation_file.data.id
+                      : explanation_file.data[0].id;
+                    await Coopernet.addImageToCard(
+                      data.uuid[0].value,
+                      imageId,
+                      "explanation"
+                    );
+                  }*/
     }
   };
 
   //endregion
 
-  //#region CARD IMAGE
+  //#region CARD IMAGE PAS ENCORE GERÉ
 
   /*static addImageToCard = async (card_uuid, image_uuid, inputType) => {
-    console.debug('Dans addImageToCard', image_uuid)
-    await Coopernet.setOAuthToken();
-
-    const response = fetch(`${Coopernet.url}jsonapi/node/carte/${card_uuid}/relationships/field_card_${inputType}_picture`, {
-      method: 'PATCH', headers: {
-        'Content-Type': 'application/vnd.api+json',
-        'Accept': 'application/vnd.api+json',
-        "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
-      }, body: JSON.stringify({
-        "data": {
-          "type": "file--file",
-          "id": image_uuid
-        }
-      })
-    })
-    console.log((await response).status);
-  }
-  static deleteImageFromCard = async (card_uuid: string, inputType: string) => {
-    console.debug('Dans addImageToCard')
-    await Coopernet.setOAuthToken();
-
-    const response = fetch(`${Coopernet.url}jsonapi/node/carte/${card_uuid}/relationships/field_card_${inputType}_picture`, {
-      method: 'PATCH', headers: {
-        'Content-Type': 'application/vnd.api+json',
-        'Accept': 'application/vnd.api+json',
-        "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
-      }, body: JSON.stringify({
-        "data": null
-      })
-    })
-    console.log((await response).status);
-  }
-
-  static postImage = async (image, inputField) => {
-    console.debug('Dans postImage')
-    await Coopernet.setOAuthToken();
-
-    const infoImage = Coopernet.getFile(image.url);
-    const response = await fetch(`${Coopernet.url}jsonapi/node/carte/field_card_${inputField}_picture`,
-        {
-          method: "POST", headers: {
-            "Content-Type": 'application/octet-stream',
-            "Accept": "application/vnd.api+json",
-            "Content-Disposition": `file; filename="${Math.random().toString(36).replace(/[^a-z]+/g, '')}.${infoImage[1]}"`,
+        console.debug('Dans addImageToCard', image_uuid)
+        await Coopernet.setOAuthToken();
+    
+        const response = fetch(`${Coopernet.url}jsonapi/node/carte/${card_uuid}/relationships/field_card_${inputType}_picture`, {
+          method: 'PATCH', headers: {
+            'Content-Type': 'application/vnd.api+json',
+            'Accept': 'application/vnd.api+json',
             "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
-          }, body: image.data.files[0]
+          }, body: JSON.stringify({
+            "data": {
+              "type": "file--file",
+              "id": image_uuid
+            }
+          })
         })
-    if (response.ok) {
-      return response.json();
-    } else {
-      console.debug('Fichier non envoyé', response.status);
-    }
-  }
-  static getFile = (imageUrl) => {
-    console.debug('imageURL', imageUrl)
-    const path = imageUrl.split('\\');
-    const finalPath = path[path.length - 1];
-    return finalPath.split('.');
-  }*/
+        console.log((await response).status);
+      }
+      static deleteImageFromCard = async (card_uuid: string, inputType: string) => {
+        console.debug('Dans addImageToCard')
+        await Coopernet.setOAuthToken();
+    
+        const response = fetch(`${Coopernet.url}jsonapi/node/carte/${card_uuid}/relationships/field_card_${inputType}_picture`, {
+          method: 'PATCH', headers: {
+            'Content-Type': 'application/vnd.api+json',
+            'Accept': 'application/vnd.api+json',
+            "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
+          }, body: JSON.stringify({
+            "data": null
+          })
+        })
+        console.log((await response).status);
+      }
+    
+      static postImage = async (image, inputField) => {
+        console.debug('Dans postImage')
+        await Coopernet.setOAuthToken();
+    
+        const infoImage = Coopernet.getFile(image.url);
+        const response = await fetch(`${Coopernet.url}jsonapi/node/carte/field_card_${inputField}_picture`,
+            {
+              method: "POST", headers: {
+                "Content-Type": 'application/octet-stream',
+                "Accept": "application/vnd.api+json",
+                "Content-Disposition": `file; filename="${Math.random().toString(36).replace(/[^a-z]+/g, '')}.${infoImage[1]}"`,
+                "Authorization": Coopernet.oAuthToken.token_type + " " + Coopernet.oAuthToken.access_token,
+              }, body: image.data.files[0]
+            })
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.debug('Fichier non envoyé', response.status);
+        }
+      }
+      static getFile = (imageUrl) => {
+        console.debug('imageURL', imageUrl)
+        const path = imageUrl.split('\\');
+        const finalPath = path[path.length - 1];
+        return finalPath.split('.');
+      }*/
 
   /* /!**
-   * Fonction servant à trouver une photo via son id
-   * @param id de l'image à trouver.
-   * @returns {Promise<any>}
-   *!/
-  static findImage = async (id) => {
-    const response = await fetch(`${Coopernet.url_server}jsonapi/file/file?filter[drupal_internal__fid]=${id}`)
-    return await response.json();
-  }*/
+       * Fonction servant à trouver une photo via son id
+       * @param id de l'image à trouver.
+       * @returns {Promise<any>}
+       *!/
+      static findImage = async (id) => {
+        const response = await fetch(`${Coopernet.url_server}jsonapi/file/file?filter[drupal_internal__fid]=${id}`)
+        return await response.json();
+      }*/
 
   //#endregion
 
+  /**
+   * Récupère la liste des utilisateurs
+   */
   static getUsers = async (): Promise<User[]> => {
     await Coopernet.setOAuthToken();
     const response = await fetch(Coopernet.url + "memo/users/", {
