@@ -8,6 +8,9 @@ const enum Breakpoints {
   XL2 = 1536,
 }
 
+/**
+ * Renvoi TRUE si l'écran est en dessous d'un breakpoint défini sinon renvoi FALSE
+ */
 export function useSmallScreen() {
   const [isSmall, setIsSmall] = useState(false);
   useLayoutEffect(() => {
@@ -17,7 +20,6 @@ export function useSmallScreen() {
     }
 
     window.addEventListener("resize", updateSize);
-    updateSize();
     return () => window.removeEventListener("resize", updateSize);
   }, []);
   return isSmall;
